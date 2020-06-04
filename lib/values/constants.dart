@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 
 final purpleTextStyle = TextStyle(
-  color: Colors.yellow,
+  color: Colors.white,
+  fontSize: 24,
   fontWeight: FontWeight.bold,
   fontFamily: 'OpenSans',
 );

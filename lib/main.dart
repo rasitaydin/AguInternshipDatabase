@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:internshipdatabase/pages/add_internship_page.dart';
 import 'package:internshipdatabase/pages/login_page.dart';
+import 'package:internshipdatabase/pages/profile_page.dart';
+import 'package:internshipdatabase/pages/search_internship_page.dart';
 import 'package:internshipdatabase/pages/signup_page.dart';
 import 'package:internshipdatabase/pages/welcome_page.dart';
 import 'package:flutter/services.dart' ;
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
           ),
           debugShowCheckedModeBanner: false,
           routes: {
-            '/'               : (context) => SignupPage(),
+            '/'               : (context) => SearchInternshipPage(),
 
           },
         );

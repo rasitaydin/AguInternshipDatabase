@@ -12,7 +12,14 @@ class _SignupPage extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _getCustomAppBar(),
+      appBar: AppBar(
+      centerTitle: true,
+      backgroundColor: Colors.blue,
+      title: Text(
+        "Sign Up",
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24,color: Colors.white),textAlign: TextAlign.center,
+      ),
+    ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -153,38 +160,5 @@ class _SignupPage extends State<SignupPage> {
     );
   }
 
-  _getCustomAppBar() {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(100),
-      child: Container(
-        alignment: Alignment.bottomCenter,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(60),
-          ),
-          color: Colors.blue,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-              ],
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            ),
-            Text(
-              "Sign Up",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontSize: 22,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+
 }
