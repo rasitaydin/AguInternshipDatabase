@@ -15,7 +15,7 @@ class WelcomePage extends StatelessWidget {
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/images/bg.jpg"),
+              image: AssetImage("assets/images/bg.png"),
               fit: BoxFit.cover),
         ),
         child: Stack(
@@ -32,7 +32,7 @@ class WelcomePage extends StatelessWidget {
                 children: [
                   Spacer(),
                   Container(
-                    height: 110,
+                    height: 200,
                     margin: EdgeInsets.only(left: 11, right: 12),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +41,7 @@ class WelcomePage extends StatelessWidget {
                         Container(
                           height: 52,
                           child: RaisedButton(
-                            color: Colors.blue ,
+                            color: Colors.red ,
                             onPressed: () => this.onButtonTwoPressed(context),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
@@ -61,10 +61,11 @@ class WelcomePage extends StatelessWidget {
                             ),
                           ),
                         ),
+                        SizedBox(height: 20.0),
                         Container(
                           height: 52,
                           child: RaisedButton(
-                            color: Colors.blue ,
+                            color: Colors.red ,
                             onPressed: () => this.onButtonTwoPressed(context),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
