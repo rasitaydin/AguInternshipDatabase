@@ -26,6 +26,10 @@ class LocalDBService implements DBService{
   }
 
   Future<FutureOr<void>> _onCreate(Database db, int version) async {
+    await db.execute("CREATE TABLE user"
+        "(email TEXT,"
+        "password TEXT);");
+
     await db.execute("CREATE TABLE city"
         "(id INTEGER PRIMARY KEY AUTOINCREMENT,"
         "name TEXT,"
