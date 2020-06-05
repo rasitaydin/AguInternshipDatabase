@@ -26,20 +26,82 @@ class LocalDBService implements DBService{
   }
 
   Future<FutureOr<void>> _onCreate(Database db, int version) async {
-    await db.execute("CREATE TABLE city "
-        "(id INT NOT NULL AUTO_INCREMENT,"
-        "name VARCHAR(45) NOT NULL, "
-        "country_id INT NOT NULL, "
-        "INDEX fk_city_country1_idx (country_id ASC) VISIBLE, "
-        "CONSTRAINT fk_city_country1 "
-        "FOREIGN KEY (country_id);");
+    await db.execute("CREATE TABLE city"
+        "(id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "name TEXT,"
+        "country_id INTEGER,"
+        "FOREIGN KEY(country_id) REFERENCES country(id));");
+
+    await db.execute("CREATE TABLE company"
+        "(id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "name TEXT);");
+
+    await db.execute("CREATE TABLE contact_types"
+        "(id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "name TEXT);");
+
+    await db.execute("CREATE TABLE country"
+        "(id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "name TEXT);");
+
+    await db.execute("CREATE TABLE departments"
+        "(id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "name TEXT);");
+
+    await db.execute("CREATE TABLE interest_areas"
+        "(id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "name TEXT);");
+
+    await db.execute("CREATE TABLE student_interests"
+        "(interest_areas_id INTEGER,"
+        "student_student_id INTEGER,"
+        "FOREIGN KEY(interest_areas_id) REFERENCES interest_areas(id),"
+        "FOREIGN KEY(student_student_id) REFERENCES student(student_id));");
+
+    await db.execute("CREATE TABLE student"
+        "(student_id INTEGER PRIMARY KEY,"
+        "name TEXT,"
+        "surname TEXT,"
+        "gender TEXT,"
+        "department TEXT,"
+        "phone_number TEXT,"
+        "email TEXT,"
+        "show_my_phone TEXT);");
+
+    await db.execute("CREATE TABLE internship"
+        "(id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "start_date TEXT,"
+        "end_date TEXT,"
+        "contact_info TEXT,"
+        "free_launch TEXT,"
+        "year_of_student TEXT,"
+        "gpa TEXT,"
+        "is_paid TEXT,"
+        "is_full_time TEXT,"
+        "is_mandatory TEXT,"
+        "city_id INTEGER,"
+        "country_id INTEGER,"
+        "departments_id INTEGER,"
+        "contact_types_id INTEGER,"
+        "company_id INTEGER,"
+        "student_id INTEGER,"
+        "FOREIGN KEY(city_id) REFERENCES city(id),"
+        "FOREIGN KEY(country_id) REFERENCES country(id),"
+        "FOREIGN KEY(departments_id) REFERENCES departments(id),"
+        "FOREIGN KEY(contact_types_id) REFERENCES contact_types(id),"
+        "FOREIGN KEY(company_id) REFERENCES company(id),"
+        "FOREIGN KEY(student_id) REFERENCES student(student_id));");
+
+
+
+
 
   }
 
   @override
   Future<bool> saveStudent(Student student) async {
     var dbClient = await db;
-    return null;
+    await dbClient.insert("city", {'name' : "mardin"});
   }
 
   /*
