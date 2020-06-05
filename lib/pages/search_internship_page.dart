@@ -14,13 +14,36 @@ class _SearchInternshipPage extends State<SearchInternshipPage> {
   bool _paid = false;
   bool _fullTime = false;
   bool _mandatory = false;
+  int _selectedPage =0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        currentIndex: selectedPage,
-        onTap: ChangePage,
+        currentIndex: _selectedPage,
+        onTap: (_selectedPage) {
+          if(_selectedPage==0){
+            ChangePage(_selectedPage);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SearchInternshipPage()));
+          }
+          else if(_selectedPage==1){
+            ChangePage(_selectedPage);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AddInternshipPage()));
+          }
+          else if(_selectedPage==2){
+            ChangePage(_selectedPage);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ProfilePage()));
+          }
+        },
         iconSize: 35,
         fixedColor: Colors.black,
         items: <BottomNavigationBarItem>[
@@ -556,21 +579,22 @@ class _SearchInternshipPage extends State<SearchInternshipPage> {
     return AddInternshipPage();
   }
 
-  int selectedPage =0;
+
   void ChangePage(int index){
     setState(() {
-      selectedPage =index;
+      _selectedPage =index;
+      ShowPage();
     });
   }
 
   Widget ShowPage(){
-    if(selectedPage==0){
+    if(_selectedPage==0){
       return homepage();
     }
-    else if(selectedPage==1){
+    else if(_selectedPage==1){
       return add();
     }
-    else if(selectedPage==2){
+    else if(_selectedPage==2){
       return profile();
     }
   }

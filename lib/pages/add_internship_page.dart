@@ -20,6 +20,27 @@ class _AddInternshipPage extends State<AddInternshipPage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         iconSize: 35,
+        onTap:  (_selectedPage) {
+          ChangePage(_selectedPage);
+          if(_selectedPage==0){
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SearchInternshipPage()));
+          }
+          else if(_selectedPage==1){
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AddInternshipPage()));
+          }
+          else if(_selectedPage==2){
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ProfilePage()));
+          }
+        },
         fixedColor: Colors.black,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
