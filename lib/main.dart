@@ -3,6 +3,8 @@ import 'package:internshipdatabase/locator.dart';
 import 'package:internshipdatabase/viewmodels/main_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart' ;
+import 'pages/login_page.dart';
+import 'pages/signup_page.dart';
 import 'pages/welcome_page.dart';
 
 void main() {
@@ -26,6 +28,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           routes: {
             '/'               : (context) => WelcomePage(),
+            '/signUp'         : (context) => SignupPage(),
+            '/login'          : (context) => LoginPage(),
+
           },
         ));
   }

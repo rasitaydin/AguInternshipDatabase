@@ -1,16 +1,10 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:internshipdatabase/models/student_model.dart';
 import 'package:internshipdatabase/viewmodels/main_model.dart';
 import 'package:provider/provider.dart';
 
-
-
-
 class WelcomePage extends StatelessWidget {
-  void onButtonTwoPressed(BuildContext context) => Navigator.pushReplacementNamed(context, "/login");
-
   @override
   Widget build(BuildContext context) {
 
@@ -48,7 +42,7 @@ class WelcomePage extends StatelessWidget {
                           height: 52,
                           child: RaisedButton(
                             color: Colors.red ,
-                            onPressed: () => this.onButtonTwoPressed(context),
+                            onPressed: () => Navigator.pushNamed(context, '/login'),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
                             ),
@@ -72,7 +66,7 @@ class WelcomePage extends StatelessWidget {
                           height: 52,
                           child: RaisedButton(
                             color: Colors.red ,
-                            onPressed: () => this.onButtonTwoPressed(context),
+                            onPressed: () => Navigator.pushNamed(context, '/signUp'),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
                             ),

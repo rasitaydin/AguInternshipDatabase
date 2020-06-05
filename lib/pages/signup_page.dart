@@ -141,7 +141,7 @@ class _SignupPage extends State<SignupPage> {
       child: RaisedButton(
         padding: EdgeInsets.all(15.0),
         color: Colors.grey,
-        onPressed: () => print("kayit yap basildi"),
+        onPressed: () => Navigator.pushReplacementNamed(context, '/'),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
