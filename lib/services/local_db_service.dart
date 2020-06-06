@@ -165,13 +165,12 @@ class LocalDBService implements DBService{
   @override
   Future<bool> updateStudent(Student student) async{
     var dbClient = await db;
-    final String update = "UPDATE student"
+    final String update = "UPDATE student SET "
       "name = '${student.name}',"
       "surname = '${student.surname}',"
       "gender = '${student.gender}',"
       "department = '${student.department}',"
       "phone_number = '${student.phoneNumber}',"
-      "email = '${student.email}',"
       "show_my_phone = '${student.showMyPhone}'"
       "WHERE student_id = '${student.studentID}';";
 

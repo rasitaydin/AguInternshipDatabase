@@ -18,6 +18,26 @@ class _ProfilePage extends State<EditProfilePage> {
   int selectedPage = 0;
   double height = 10.0;
 
+  TextEditingController nameCont;
+  TextEditingController surnameCont;
+  TextEditingController idCont;
+  TextEditingController genderCont;
+  TextEditingController departmentCont;
+  TextEditingController intAreasCont;
+  TextEditingController phoneCont;
+
+  @override
+  void dispose() {
+    nameCont.dispose();
+    surnameCont.dispose();
+    idCont.dispose();
+    genderCont.dispose();
+    departmentCont.dispose();
+    intAreasCont.dispose();
+    phoneCont.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final _mainModel = Provider.of<MainModel>(context);
@@ -94,18 +114,34 @@ class _ProfilePage extends State<EditProfilePage> {
                     builder: (context, data) {
                       if(data.hasData){
                         Student _student = data.data;
+                        nameCont = TextEditingController(text: _student.name);
+                        surnameCont = TextEditingController(text: _student.surname);
+                        idCont = TextEditingController(text: _student.studentID.toString());
+                        genderCont = TextEditingController(text: _student.gender);
+                        departmentCont = TextEditingController(text: _student.department);
+                        intAreasCont = TextEditingController(text: "");
+                        phoneCont = TextEditingController(text: _student.phoneNumber);
+
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            InputWidget.textField(height, null, "Name",  Icons.people, TextInputType.text, _student.name),
-                            InputWidget.textField(height, null, "Surname",  Icons.people, TextInputType.text, _student.surname),
-                            InputWidget.textField(height, null, "Student ID",  Icons.assignment_ind, TextInputType.text, _student.studentID.toString()),
-                            InputWidget.textField(height, null, "Gender",  Icons.accessibility, TextInputType.text, _student.gender),
-                            InputWidget.textField(height, null, "Department",  Icons.assessment, TextInputType.text, _student.department),
-                            InputWidget.textField(height, null, "Interest Areas",  Icons.account_balance, TextInputType.text, null),
-                            InputWidget.textField(height, null, "Phone",  Icons.phone, TextInputType.phone, _student.phoneNumber),
+                            InputWidget.textField(height, nameCont, "Name",  Icons.people, TextInputType.text, _student.name),
+                            InputWidget.textField(height, surnameCont, "Surname",  Icons.people, TextInputType.text, _student.surname),
+                            InputWidget.textField(height, idCont, "Student ID",  Icons.assignment_ind, TextInputType.text, _student.studentID.toString()),
+                            InputWidget.textField(height, genderCont, "Gender",  Icons.accessibility, TextInputType.text, _student.gender),
+                            InputWidget.textField(height, departmentCont, "Department",  Icons.assessment, TextInputType.text, _student.department),
+                            InputWidget.textField(height, intAreasCont, "Interest Areas",  Icons.account_balance, TextInputType.text, null),
+                            InputWidget.textField(height, phoneCont, "Phone",  Icons.phone, TextInputType.phone, _student.phoneNumber),
                             InputWidget.checkBox(height, 'Show My Phone Number', _showMyNumber),
-                            InputWidget.button(height, 'Update', () => {}),
+                            InputWidget.button(height, 'Update', () => update(Student(
+                              studentID: int.parse(idCont.text),
+                              name: nameCont.text,
+                              surname: surnameCont.text,
+                              gender: genderCont.text,
+                              department: departmentCont.text,
+                              phoneNumber: phoneCont.text,
+                              showMyPhone: "Y"
+                            ))),
                             SizedBox(height: height),
                           ],
                         );
@@ -147,6 +183,11 @@ class _ProfilePage extends State<EditProfilePage> {
     } else if(selectedPage == 2){
       return profile();
     }
+  }
+
+  void update(Student student) async{
+    final _mainModel = Provider.of<MainModel>(context, listen: false);
+    _mainModel.updateStudent(student);
   }
 
 }
