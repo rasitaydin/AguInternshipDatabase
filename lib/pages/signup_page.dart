@@ -63,7 +63,7 @@ class _SignupPage extends State<SignupPage> {
                       InputWidget.textField(50, mailCont, "E-mail",  Icons.email, TextInputType.text),
                       InputWidget.textField(10, idCont, "Student ID",  Icons.swap_calls, TextInputType.number),
                       InputWidget.textField(10, passCont, "Password",  Icons.lock, TextInputType.text),
-                      InputWidget.button(20, 'SIGN UP', signUp(User(mail: mailCont.text, pass: passCont.text, studentID: idCont.text), context)),
+                      InputWidget.button(20, 'SIGN UP', () => signUp(User(mail: mailCont.text, pass: passCont.text, studentID: idCont.text), context)),
                     ],
                   ),
                 ),

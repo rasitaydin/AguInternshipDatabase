@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       InputWidget.textField(50, mailCont, "E-mail",  Icons.email, TextInputType.text),
                       InputWidget.textField(10, passCont, "Password",  Icons.lock, TextInputType.text),
-                      InputWidget.button(20, 'LOGIN', login(User(mail: mailCont.text, pass: passCont.text), context)),
+                      InputWidget.button(20, 'LOGIN', () => login(User(mail: mailCont.text, pass: passCont.text), context)),
                     ],
                   ),
                 ),
@@ -86,6 +86,7 @@ class _LoginPageState extends State<LoginPage> {
     var result = await _mainModel.login(user);
     if(result){
       _mainModel.user = user;
+      _mainModel.getStudent(user.studentID);
       Navigator.pushReplacementNamed(context, '/home');
     } else{
       //TODO Giris Basarısız
