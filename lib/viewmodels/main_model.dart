@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:internshipdatabase/locator.dart';
 import 'package:internshipdatabase/models/internship_model.dart';
+import 'package:internshipdatabase/models/student_model.dart';
 import 'package:internshipdatabase/models/user_model.dart';
 import 'package:internshipdatabase/repository/main_repository.dart';
 import 'package:internshipdatabase/services/db_base.dart';
@@ -49,6 +50,16 @@ class MainModel with ChangeNotifier implements DBService{
     try {
       state = ViewState.BUSY;
       return await _userRepository.saveInternship(internship);
+    } finally {
+      _state = ViewState.IDLE;
+    }
+  }
+
+  @override
+  Future<Student> getStudent(String studentID) async{
+    try {
+      state = ViewState.BUSY;
+      return await _userRepository.getStudent(studentID);
     } finally {
       _state = ViewState.IDLE;
     }

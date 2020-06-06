@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:internshipdatabase/models/internship_model.dart';
+import 'package:internshipdatabase/models/student_model.dart';
 import 'package:internshipdatabase/test_data.dart';
 import 'package:internshipdatabase/models/user_model.dart';
 import 'package:internshipdatabase/services/db_base.dart';
@@ -142,11 +143,23 @@ class LocalDBService implements DBService{
   @override
   Future<bool> saveInternship(Internship internship) async{
     var dbClient = await db;
-    int countryExist = Sqflite.firstIntValue(await dbClient.rawQuery('SELECT COUNT(*) FROM country WHERE name = "${internship.country}"'));
+    int countryExist = Sqflite.firstIntValue(await dbClient.rawQuery('SELECT COUNT(*) FROM country WHERE id = "${internship.country}"'));
     if(countryExist == 1){
-      //ülke va
+      //ülke var
+    }else{
+      int countryID = await dbClient.rawInsert('INSERT INTO country(name), VALUES("${internship.country}");');
+
     }
     return null;
+  }
+
+  @override
+  Future<Student> getStudent(String studentID) async{
+    var dbClient = await db;
+    var result = await dbClient.query("student", where: "student_id = ${studentID}");
+    List<Student> student = result.map((data) => Student.fromMap(data)).toList();
+    debugPrint(">>> local_db_service >>> getUser() >>> ${student[0].toString()}");
+    return student[0];
   }
 
   /*
