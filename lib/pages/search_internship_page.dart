@@ -95,7 +95,6 @@ class _SearchInternshipPage extends State<SearchInternshipPage> {
                       InputWidget.textField(height, null, "City",  Icons.place, TextInputType.text, null),
                       InputWidget.textField(height, null, "Gender",  Icons.accessibility, TextInputType.text, null),
                       InputWidget.textField(height, null, "Department",  Icons.assessment, TextInputType.text, null),
-                      InputWidget.textField(height, null, "Interest Areas",  Icons.account_balance, TextInputType.text, null),
                       InputWidget.textField(height, null, "Minimum GPA",  Icons.calendar_today, TextInputType.number, null),
                       InputWidget.textField(height, null, "Year Of Study",  Icons.calendar_today, TextInputType.number, null),
                       InputWidget.checkBox(height, 'Free Lunch', _lunch),

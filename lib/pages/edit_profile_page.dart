@@ -23,7 +23,6 @@ class _ProfilePage extends State<EditProfilePage> {
   TextEditingController idCont;
   TextEditingController genderCont;
   TextEditingController departmentCont;
-  TextEditingController intAreasCont;
   TextEditingController phoneCont;
 
   @override
@@ -33,7 +32,6 @@ class _ProfilePage extends State<EditProfilePage> {
     idCont.dispose();
     genderCont.dispose();
     departmentCont.dispose();
-    intAreasCont.dispose();
     phoneCont.dispose();
     super.dispose();
   }
@@ -119,7 +117,6 @@ class _ProfilePage extends State<EditProfilePage> {
                         idCont = TextEditingController(text: _student.studentID.toString());
                         genderCont = TextEditingController(text: _student.gender);
                         departmentCont = TextEditingController(text: _student.department);
-                        intAreasCont = TextEditingController(text: "");
                         phoneCont = TextEditingController(text: _student.phoneNumber);
 
                         return Column(
@@ -130,7 +127,6 @@ class _ProfilePage extends State<EditProfilePage> {
                             InputWidget.textField(height, idCont, "Student ID",  Icons.assignment_ind, TextInputType.text, _student.studentID.toString()),
                             InputWidget.textField(height, genderCont, "Gender",  Icons.accessibility, TextInputType.text, _student.gender),
                             InputWidget.textField(height, departmentCont, "Department",  Icons.assessment, TextInputType.text, _student.department),
-                            InputWidget.textField(height, intAreasCont, "Interest Areas",  Icons.account_balance, TextInputType.text, null),
                             InputWidget.textField(height, phoneCont, "Phone",  Icons.phone, TextInputType.phone, _student.phoneNumber),
                             InputWidget.checkBox(height, 'Show My Phone Number', _showMyNumber),
                             InputWidget.button(height, 'Update', () => update(Student(
