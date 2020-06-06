@@ -38,7 +38,7 @@ class Internship{
       'departments_id' : department,
       'contact_types_id' :  contactType,
       'company_id' : company,
-      'student_id' : student;
+      'student_id' : student
 
     };
   }
