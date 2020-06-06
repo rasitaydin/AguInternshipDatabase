@@ -156,7 +156,7 @@ class LocalDBService implements DBService{
   @override
   Future<Student> getStudent(String email) async{
     var dbClient = await db;
-    var result = await dbClient.query("student", where: "email = ${email}");
+    var result = await dbClient.query("student", where: 'email = "${email}"');
     List<Student> student = result.map((data) => Student.fromMap(data)).toList();
     debugPrint(">>> local_db_service >>> getUser() >>> ${student[0].toString()}");
     return student[0];

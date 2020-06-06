@@ -1,5 +1,5 @@
 class Student {
-  String studentID;
+  int studentID;
   String name;
   String surname;
   String gender;
@@ -26,7 +26,8 @@ class Student {
 
   Student.fromMap(Map<String, dynamic> map):
         studentID = map['student_id'],
-        name = map['studentID'],
+        name = map['name'],
+        email = map['email'],
         surname = map['surname'],
         gender = map['gender'],
         department = map['department'],
