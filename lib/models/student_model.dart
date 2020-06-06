@@ -1,11 +1,9 @@
-import 'package:internshipdatabase/models/department_model.dart';
-
 class Student {
   String studentID;
   String name;
   String surname;
   String gender;
-  Department department;
+  String department;
   String phoneNumber;
   String email;
   String showMyPhone;
@@ -15,12 +13,25 @@ class Student {
 
   Map<String, dynamic> toMap() {
     return {
-      'studentID' : studentID,
+      'student_id' : studentID,
+      'name' : name,
+      'surname' : surname,
+      'gender' : gender,
+      'department' : department,
+      'phone_number' : phoneNumber,
+      'email' : email,
+      'show_my_phone' : showMyPhone,
     };
   }
 
   Student.fromMap(Map<String, dynamic> map):
-        studentID = map['studentID'];
+        studentID = map['student_id'],
+        name = map['studentID'],
+        surname = map['surname'],
+        gender = map['gender'],
+        department = map['department'],
+        phoneNumber = map['phone_number'],
+        showMyPhone = map['show_my_phone'];
 
   @override
   String toString() {
