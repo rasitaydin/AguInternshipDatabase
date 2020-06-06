@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:internshipdatabase/models/student_model.dart';
 import 'package:internshipdatabase/pages/search_internship_page.dart';
+import 'package:internshipdatabase/viewmodels/main_model.dart';
 import 'package:internshipdatabase/widgets/input_widget.dart';
+import 'package:provider/provider.dart';
 
 import 'add_internship_page.dart';
 
@@ -17,6 +20,7 @@ class _ProfilePage extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _mainModel = Provider.of<MainModel>(context);
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -85,20 +89,30 @@ class _ProfilePage extends State<EditProfilePage> {
                     horizontal: 30.0,
                     vertical: 20.0,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      InputWidget.textField(height, null, "Name",  Icons.people, TextInputType.text),
-                      InputWidget.textField(height, null, "Surname",  Icons.people, TextInputType.text),
-                      InputWidget.textField(height, null, "Student ID",  Icons.assignment_ind, TextInputType.text),
-                      InputWidget.textField(height, null, "Gender",  Icons.accessibility, TextInputType.text),
-                      InputWidget.textField(height, null, "Department",  Icons.assessment, TextInputType.text),
-                      InputWidget.textField(height, null, "Interest Areas",  Icons.account_balance, TextInputType.text),
-                      InputWidget.textField(height, null, "Phone",  Icons.phone, TextInputType.phone),
-                      InputWidget.checkBox(height, 'Show My Phone Number', _showMyNumber),
-                      InputWidget.button(height, 'Update', () => {}),
-                      SizedBox(height: height),
-                    ],
+                  child: FutureBuilder<Student>(
+                    future: _mainModel.getStudent(_mainModel.user.mail),
+                    builder: (context, data) {
+                      if(data.hasData){
+                        Student _student = data.data;
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            InputWidget.textField(height, null, "Name",  Icons.people, TextInputType.text, _student.name),
+                            InputWidget.textField(height, null, "Surname",  Icons.people, TextInputType.text, _student.surname),
+                            InputWidget.textField(height, null, "Student ID",  Icons.assignment_ind, TextInputType.text, _student.studentID.toString()),
+                            InputWidget.textField(height, null, "Gender",  Icons.accessibility, TextInputType.text, _student.gender),
+                            InputWidget.textField(height, null, "Department",  Icons.assessment, TextInputType.text, _student.department),
+                            InputWidget.textField(height, null, "Interest Areas",  Icons.account_balance, TextInputType.text, null),
+                            InputWidget.textField(height, null, "Phone",  Icons.phone, TextInputType.phone, _student.phoneNumber),
+                            InputWidget.checkBox(height, 'Show My Phone Number', _showMyNumber),
+                            InputWidget.button(height, 'Update', () => {}),
+                            SizedBox(height: height),
+                          ],
+                        );
+                      } else{
+                        return Center(child: CircularProgressIndicator(),);
+                      }
+                    },
                   ),
                 ),
               )

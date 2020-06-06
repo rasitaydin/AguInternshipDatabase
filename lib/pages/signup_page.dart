@@ -60,9 +60,9 @@ class _SignupPage extends State<SignupPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      InputWidget.textField(50, mailCont, "E-mail",  Icons.email, TextInputType.text),
-                      InputWidget.textField(10, idCont, "Student ID",  Icons.swap_calls, TextInputType.number),
-                      InputWidget.textField(10, passCont, "Password",  Icons.lock, TextInputType.text),
+                      InputWidget.textField(50, mailCont, "E-mail",  Icons.email, TextInputType.text, null),
+                      InputWidget.textField(10, idCont, "Student ID",  Icons.swap_calls, TextInputType.number, null),
+                      InputWidget.textField(10, passCont, "Password",  Icons.lock, TextInputType.text, null),
                       InputWidget.button(20, 'SIGN UP', () => signUp(User(mail: mailCont.text, pass: passCont.text, studentID: idCont.text), context)),
                     ],
                   ),

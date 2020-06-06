@@ -4,7 +4,7 @@ import '../values/constants.dart';
 
 class InputWidget {
   static Widget textField(double height, TextEditingController controller,
-      String hint, IconData icon, TextInputType inputType) {
+      String hint, IconData icon, TextInputType inputType, String initialValue) {
     return Column(
       children: <Widget>[
         SizedBox(height: height),
@@ -19,6 +19,7 @@ class InputWidget {
               child: FutureBuilder<String>(
                 builder: (context, result) {
                   return TextFormField(
+                    initialValue: initialValue,
                     controller: controller,
                     keyboardType: inputType,
                     style: TextStyle(
