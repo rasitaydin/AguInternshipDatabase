@@ -65,4 +65,15 @@ class MainModel with ChangeNotifier implements DBService{
     }
   }
 
+  @override
+  Future<bool> updateStudent(Student student) async{
+    try {
+      state = ViewState.BUSY;
+      await _userRepository.updateStudent(student);
+      return true;
+    } finally {
+      _state = ViewState.IDLE;
+    }
+  }
+
 }

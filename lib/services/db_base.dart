@@ -7,5 +7,6 @@ abstract class DBService {
   Future<bool> saveInternship(Internship internship);
   Future<Student> getStudent(String mail);
   Future<bool> login(User user);
+  Future<bool> updateStudent(Student student);
 
 }

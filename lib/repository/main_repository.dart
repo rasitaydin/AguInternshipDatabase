@@ -28,4 +28,10 @@ class MainRepository implements DBService{
     return await _localDBService.getStudent(mail);
   }
 
+  @override
+  Future<bool> updateStudent(Student student) async{
+    await _localDBService.updateStudent(student);
+    return null;
+  }
+
 }

@@ -162,6 +162,23 @@ class LocalDBService implements DBService{
     return student[0];
   }
 
+  @override
+  Future<bool> updateStudent(Student student) async{
+    var dbClient = await db;
+    final String update = "UPDATE student"
+      "name = '${student.name}',"
+      "surname = '${student.surname}',"
+      "gender = '${student.gender}',"
+      "department = '${student.department}',"
+      "phone_number = '${student.phoneNumber}',"
+      "email = '${student.email}',"
+      "show_my_phone = '${student.showMyPhone}'"
+      "WHERE student_id = '${student.studentID}';";
+
+    await dbClient.rawUpdate(update);
+    return true;
+  }
+
   /*
 
   Future<List<Message>> queryMessages() async{
