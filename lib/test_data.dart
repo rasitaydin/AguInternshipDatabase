@@ -1,5 +1,3 @@
-import 'pages/signup_page.dart';
-
 class TestData{
   static final String country = "INSERT INTO country VALUES"
       "('792','Turkey'),"
