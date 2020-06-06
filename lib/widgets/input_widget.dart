@@ -19,6 +19,7 @@ class InputWidget {
               child: FutureBuilder<String>(
                 builder: (context, result) {
                   return TextFormField(
+                    controller: controller,
                     keyboardType: inputType,
                     style: TextStyle(
                       color: Colors.white,
