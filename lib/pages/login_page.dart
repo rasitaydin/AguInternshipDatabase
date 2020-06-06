@@ -85,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
     MainModel _mainModel = Provider.of<MainModel>(context, listen: false);
     var result = await _mainModel.login(user);
     if(result){
+      _mainModel.user = user;
       Navigator.pushReplacementNamed(context, '/home');
     } else{
       //TODO Giris Basarısız
