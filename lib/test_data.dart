@@ -83,7 +83,7 @@ class TestData{
       "(14,110410215),"
       "(15,110410587),"
       "(16,110542145),"
-      "(17,110354895);";
+      "(17,110510109);";
 
   static final String interests = "INSERT INTO interest_areas VALUES"
       "(1,'Machine Learning'),"
@@ -118,7 +118,7 @@ class TestData{
       "(110410215,'BAHTSIZ','BEDEVİ','M','ME',5154115454,'bahtsız.bedevi@test.com','N'),"
       "(110410587,'SATILMIŞ','EV','M','CE',1102104578,'satılmış.ev@test.com','N'),"
       "(110542145,'KÜRŞAT','BAĞDÖKEN','M','CE',5078951421,'kürşat.bağdöken@test.com','N'),"
-      "(110354895,'TAYLAN','VALHA','M','CE',NULL,'taylan.valha@test.com','N');";
+      "(110510109,'TAYLAN','VALHA','M','CE',NULL,'taylan.valha@test.com','N');";
 
   static final String internship = "INSERT INTO internship VALUES"
       "(1,'2015-03-20 00:00:00','2015-06-20 00:00:00','xxx@gmail.com','Y',1,2.6,'Y','Y','Y',5,792,'R&D','e-mail',1,110210119),"
