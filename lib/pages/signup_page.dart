@@ -15,11 +15,13 @@ class SignupPage extends StatefulWidget {
 class _SignupPage extends State<SignupPage> {
   final mailCont = TextEditingController(text: "");
   final passCont = TextEditingController(text: "");
+  final idCont = TextEditingController(text: "");
 
   @override
   void dispose() {
     mailCont.dispose();
     passCont.dispose();
+    idCont.dispose();
     super.dispose();
   }
 
@@ -59,8 +61,9 @@ class _SignupPage extends State<SignupPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       InputWidget.textField(50, mailCont, "E-mail",  Icons.email, TextInputType.text),
+                      InputWidget.textField(10, idCont, "Student ID",  Icons.swap_calls, TextInputType.number),
                       InputWidget.textField(10, passCont, "Password",  Icons.lock, TextInputType.text),
-                      InputWidget.button(20, 'LOGIN', signUp(User(mail: mailCont.text, pass: passCont.text), context)),
+                      InputWidget.button(20, 'SIGN UP', signUp(User(mail: mailCont.text, pass: passCont.text, studentID: idCont.text), context)),
                     ],
                   ),
                 ),

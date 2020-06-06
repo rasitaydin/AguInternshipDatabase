@@ -29,7 +29,8 @@ class LocalDBService implements DBService{
   Future<FutureOr<void>> _onCreate(Database db, int version) async {
     await db.execute("CREATE TABLE user"
         "(mail TEXT,"
-        "pass TEXT);");
+        "pass TEXT,"
+        "student_id TEXT);");
 
     await db.execute("CREATE TABLE city"
         "(id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -106,8 +107,13 @@ class LocalDBService implements DBService{
     if(number > 0){
       return false;
     } else{
-      await dbClient.insert("user", user.toMap());
-      return true;
+      number = Sqflite.firstIntValue(await dbClient.rawQuery('SELECT COUNT(*) FROM user WHERE student_id = "${user.studentID}"'));
+      if(number > 0){
+        return false;
+      } else {
+        await dbClient.insert("user", user.toMap());
+        return true;
+      }
     }
   }
 
