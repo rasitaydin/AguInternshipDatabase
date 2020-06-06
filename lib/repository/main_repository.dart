@@ -24,8 +24,8 @@ class MainRepository implements DBService{
   }
 
   @override
-  Future<Student> getStudent(String studentID) async{
-    return await _localDBService.getStudent(studentID);
+  Future<Student> getStudent(String mail) async{
+    return await _localDBService.getStudent(mail);
   }
 
 }

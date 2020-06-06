@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
     var result = await _mainModel.login(user);
     if(result){
       _mainModel.user = user;
-      _mainModel.getStudent(user.studentID);
+      _mainModel.getStudent(user.mail);
       Navigator.pushReplacementNamed(context, '/home');
     } else{
       //TODO Giris Basarısız

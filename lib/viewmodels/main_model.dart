@@ -56,10 +56,10 @@ class MainModel with ChangeNotifier implements DBService{
   }
 
   @override
-  Future<Student> getStudent(String studentID) async{
+  Future<Student> getStudent(String mail) async{
     try {
       state = ViewState.BUSY;
-      return await _userRepository.getStudent(studentID);
+      return await _userRepository.getStudent(mail);
     } finally {
       _state = ViewState.IDLE;
     }
