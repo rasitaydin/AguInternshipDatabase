@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:internshipdatabase/pages/profile_page.dart';
+import 'package:internshipdatabase/pages/edit_profile_page.dart';
 import 'package:internshipdatabase/pages/search_internship_page.dart';
 import 'package:internshipdatabase/values/constants.dart';
+import 'package:internshipdatabase/widgets/input_widget.dart';
 
 class AddInternshipPage extends StatefulWidget {
   @override
@@ -14,6 +15,8 @@ class _AddInternshipPage extends State<AddInternshipPage> {
   bool _paid = false;
   bool _fullTime = false;
   bool _mandatory = false;
+  double height = 10.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,22 +26,13 @@ class _AddInternshipPage extends State<AddInternshipPage> {
         onTap:  (_selectedPage) {
           ChangePage(_selectedPage);
           if(_selectedPage==0){
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => SearchInternshipPage()));
+            Navigator.pushReplacementNamed(context, '/home');
           }
           else if(_selectedPage==1){
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => AddInternshipPage()));
+            Navigator.pushReplacementNamed(context, '/addInternship');
           }
           else if(_selectedPage==2){
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ProfilePage()));
+            Navigator.pushReplacementNamed(context, '/editProfile');
           }
         },
         fixedColor: Colors.black,
@@ -95,33 +89,21 @@ class _AddInternshipPage extends State<AddInternshipPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(height: 10.0),
-                      _buildCountryTF(),
-                      SizedBox(height: 10.0),
-                      _buildCityTF(),
-                      SizedBox(height: 10.0),
-                      _buildCompanyTF(),
-                      SizedBox(height: 10.0),
-                      _buildDepartmentTF(),
-                      SizedBox(height: 10.0),
-                      _buildAppliedTF(),
-                      SizedBox(height: 10.0),
-                      _buildStartDateTF(),
-                      SizedBox(height: 10.0),
-                      _buildEndDateTF(),
-                      SizedBox(height: 20.0),
-                      _buildYearTF(),
-                      SizedBox(height: 20.0),
-                      _buildGpaTF(),
-                      SizedBox(height: 20.0),
-                      _buildLunchCheckbox(),
-                      SizedBox(height: 20.0),
-                      _buildPaidCheckbox(),
-                      SizedBox(height: 20.0),
-                      _buildFullTimeCheckbox(),
-                      SizedBox(height: 20.0),
-                      _buildMandatoryCheckbox(),
-                      SizedBox(height: 20.0),
+                      InputWidget.textField(height, null, "Country",  Icons.place, TextInputType.text),
+                      InputWidget.textField(height, null, "City",  Icons.place, TextInputType.text),
+                      InputWidget.textField(height, null, "Company Name",  Icons.account_balance, TextInputType.text),
+                      InputWidget.textField(height, null, "Department of Company",  Icons.assessment, TextInputType.text),
+                      InputWidget.textField(height, null, "Applied By (e.g. Linkedin)",  Icons.check_box, TextInputType.text),
+                      InputWidget.textField(height, null, "Start Date",  Icons.date_range, TextInputType.datetime),
+                      InputWidget.textField(height, null, "End Date",  Icons.date_range, TextInputType.text),
+                      InputWidget.textField(height, null, "Year Of Study",  Icons.calendar_today, TextInputType.number),
+                      InputWidget.textField(height, null, "GPA",  Icons.calendar_today, TextInputType.number),
+                      InputWidget.checkBox(height, 'Free Lunch', _lunch),
+                      InputWidget.checkBox(height, 'Paid', _paid),
+                      InputWidget.checkBox(height, 'Full Time', _fullTime),
+                      InputWidget.checkBox(height, 'Mandatory', _mandatory),
+                      InputWidget.button( height, 'Confirm', () => {}, context),
+                      SizedBox(height: height),
                     ],
                   ),
                 ),
@@ -133,455 +115,11 @@ class _AddInternshipPage extends State<AddInternshipPage> {
     );
   }
 
-  Widget _buildCountryTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 20.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: secondBoxDecorationStyle,
-          height: 50.0,
-          child: FutureBuilder<String>(
-            builder: (context, result) {
-              return TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(Icons.place, color: Colors.white),
-                  hintText: 'Country',
-                  hintStyle: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-  Widget _buildCityTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 20.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: secondBoxDecorationStyle,
-          height: 50.0,
-          child: FutureBuilder<String>(
-            builder: (context, result) {
-              return TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(Icons.place, color: Colors.white),
-                  hintText: 'City',
-                  hintStyle: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-  Widget _buildCompanyTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 20.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: secondBoxDecorationStyle,
-          height: 50.0,
-          child: FutureBuilder<String>(
-            builder: (context, result) {
-              return TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(Icons.account_balance, color: Colors.white),
-                  hintText: 'Company Name',
-                  hintStyle: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-  Widget _buildAppliedTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 20.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: secondBoxDecorationStyle,
-          height: 50.0,
-          child: FutureBuilder<String>(
-            builder: (context, result) {
-              return TextFormField(
-                keyboardType: TextInputType.text,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(Icons.check_box, color: Colors.white),
-                  hintText: 'Applied By (e.g. Linkedin, Kariyer.net)',
-                  hintStyle: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-  Widget _buildDepartmentTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 20.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: secondBoxDecorationStyle,
-          height: 50.0,
-          child: FutureBuilder<String>(
-            builder: (context, result) {
-              return TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(Icons.assessment, color: Colors.white),
-                  hintText: 'Department of Company',
-                  hintStyle: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-  Widget _buildStartDateTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 20.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: secondBoxDecorationStyle,
-          height: 50.0,
-          child: FutureBuilder<String>(
-            builder: (context, result) {
-              return TextFormField(
-                keyboardType: TextInputType.datetime,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(Icons.access_time, color: Colors.white),
-                  hintText: 'Start Date',
-                  hintStyle: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-  Widget _buildEndDateTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 20.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: secondBoxDecorationStyle,
-          height: 50.0,
-          child: FutureBuilder<String>(
-            builder: (context, result) {
-              return TextFormField(
-                keyboardType: TextInputType.datetime,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(Icons.access_time, color: Colors.white),
-                  hintText: 'End Date',
-                  hintStyle: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-  Widget _buildYearTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 20.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: secondBoxDecorationStyle,
-          height: 50.0,
-          child: FutureBuilder<String>(
-            builder: (context, result) {
-              return TextFormField(
-                keyboardType: TextInputType.number,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(Icons.calendar_today, color: Colors.white),
-                  hintText: 'Year Of Study',
-                  hintStyle: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-  Widget _buildGpaTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 20.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: secondBoxDecorationStyle,
-          height: 50.0,
-          child: FutureBuilder<String>(
-            builder: (context, result) {
-              return TextFormField(
-                keyboardType: TextInputType.number,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(Icons.calendar_today, color: Colors.white),
-                  hintText: 'GPA',
-                  hintStyle: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-  Widget _buildLunchCheckbox() {
-    return Container(
-      height: 40.0,
-      child: Row(
-        children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.blue),
-            child: Checkbox(
-              value: _lunch,
-              activeColor: Colors.blue,
-              checkColor: Colors.white,
-              onChanged: (value) {
-                setState(() {
-                  _lunch = value;
-                });
-              },
-            ),
-          ),
-          Text(
-              'Free Lunch',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue
-              )
-          ),
-        ],
-      ),
-    );
-  }
-  Widget _buildPaidCheckbox() {
-    return Container(
-      height: 40.0,
-      child: Row(
-        children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.blue),
-            child: Checkbox(
-              value: _paid,
-              activeColor: Colors.blue,
-              checkColor: Colors.white,
-              onChanged: (value) {
-                setState(() {
-                  _paid = value;
-                });
-              },
-            ),
-          ),
-          Text(
-              'Paid',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue
-              )
-          ),
-        ],
-      ),
-    );
-  }
-  Widget _buildFullTimeCheckbox() {
-    return Container(
-      height: 40.0,
-      child: Row(
-        children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.blue),
-            child: Checkbox(
-              value: _fullTime,
-              activeColor: Colors.blue,
-              checkColor: Colors.white,
-              onChanged: (value) {
-                setState(() {
-                  _fullTime = value;
-                });
-              },
-            ),
-          ),
-          Text(
-              'Full Time',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue
-              )
-          ),
-        ],
-      ),
-    );
-  }
-  Widget _buildMandatoryCheckbox() {
-    return Container(
-      height: 40.0,
-      child: Row(
-        children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.blue),
-            child: Checkbox(
-              value: _mandatory,
-              activeColor: Colors.blue,
-              checkColor: Colors.white,
-              onChanged: (value) {
-                setState(() {
-                  _mandatory = value;
-                });
-              },
-            ),
-          ),
-          Text(
-              'Mandatory',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue
-              )
-          ),
-        ],
-      ),
-    );
-  }
   Widget homepage() {
     return SearchInternshipPage();
   }
   Widget profile(){
-    return ProfilePage();
+    return EditProfilePage();
   }
   Widget add(){
     return AddInternshipPage();

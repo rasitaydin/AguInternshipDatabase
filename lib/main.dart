@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:internshipdatabase/locator.dart';
+import 'package:internshipdatabase/pages/edit_profile_page.dart';
 import 'package:internshipdatabase/viewmodels/main_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart' ;
+import 'pages/add_internship_page.dart';
 import 'pages/login_page.dart';
 import 'pages/search_internship_page.dart';
 import 'pages/signup_page.dart';
@@ -32,8 +34,10 @@ class MyApp extends StatelessWidget {
             '/signUp'         : (context) => SignupPage(),
             '/login'          : (context) => LoginPage(),
             '/home'           : (context) => SearchInternshipPage(),
-
+            '/addInternship'  : (context) => AddInternshipPage(),
+            '/editProfile'    : (context) => EditProfilePage(),
           },
         ));
   }
+
 }

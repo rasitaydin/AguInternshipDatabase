@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:internshipdatabase/pages/add_internship_page.dart';
-import 'package:internshipdatabase/pages/profile_page.dart';
+import 'package:internshipdatabase/pages/edit_profile_page.dart';
 import 'package:internshipdatabase/pages/search_internship_page.dart';
 import 'package:internshipdatabase/values/constants.dart';
 
@@ -37,7 +37,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
           } else if (_selectedPage == 2) {
             ChangePage(_selectedPage);
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ProfilePage()));
+                MaterialPageRoute(builder: (context) => EditProfilePage()));
           }
         },
         iconSize: 35,
@@ -633,7 +633,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
   }
 
   Widget profile() {
-    return ProfilePage();
+    return EditProfilePage();
   }
 
   Widget add() {
