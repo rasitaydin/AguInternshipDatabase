@@ -1,10 +1,3 @@
-import 'package:internshipdatabase/models/city_model.dart';
-import 'package:internshipdatabase/models/company_model.dart';
-import 'package:internshipdatabase/models/contact_type_model.dart';
-import 'package:internshipdatabase/models/country_model.dart';
-import 'package:internshipdatabase/models/department_model.dart';
-import 'package:internshipdatabase/models/student_model.dart';
-
 class Internship{
   String id;
   String startDate;
