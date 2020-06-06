@@ -8,7 +8,7 @@ import 'package:internshipdatabase/models/user_model.dart';
 import 'package:internshipdatabase/services/db_base.dart';
 import 'package:sqflite/sqflite.dart';
 
-class LocalDBService implements DBService{
+class LocalDBService implements DBService {
   static Database _db;
   String _path;
 
@@ -109,18 +109,19 @@ class LocalDBService implements DBService{
     await db.rawQuery(TestData.interests);
     await db.rawQuery(TestData.student);
     await db.rawQuery(TestData.internship);
-
   }
 
   @override
   Future<bool> saveUser(User user) async {
     var dbClient = await db;
-    int number = Sqflite.firstIntValue(await dbClient.rawQuery('SELECT COUNT(*) FROM user WHERE mail = "${user.mail}"'));
-    if(number > 0){
+    int number = Sqflite.firstIntValue(await dbClient
+        .rawQuery('SELECT COUNT(*) FROM user WHERE mail = "${user.mail}"'));
+    if (number > 0) {
       return false;
-    } else{
-      number = Sqflite.firstIntValue(await dbClient.rawQuery('SELECT COUNT(*) FROM user WHERE student_id = "${user.studentID}"'));
-      if(number > 0){
+    } else {
+      number = Sqflite.firstIntValue(await dbClient.rawQuery(
+          'SELECT COUNT(*) FROM user WHERE student_id = "${user.studentID}"'));
+      if (number > 0) {
         return false;
       } else {
         await dbClient.insert("user", user.toMap());
@@ -130,91 +131,92 @@ class LocalDBService implements DBService{
   }
 
   @override
-  Future<bool> login(User user) async{
+  Future<bool> login(User user) async {
     var dbClient = await db;
-    int number = Sqflite.firstIntValue(await dbClient.rawQuery('SELECT COUNT(*) FROM user WHERE mail = "${user.mail}"'));
-    if(number > 0){
+    int number = Sqflite.firstIntValue(await dbClient
+        .rawQuery('SELECT COUNT(*) FROM user WHERE mail = "${user.mail}" AND pass = "${user.pass}"'));
+    if (number > 0) {
       return true;
-    } else{
+    } else {
       return false;
     }
   }
 
   @override
-  Future<bool> saveInternship(Internship internship) async{
+  Future<bool> saveInternship(Internship internship) async {
     var dbClient = await db;
-    int countryExist = Sqflite.firstIntValue(await dbClient.rawQuery('SELECT COUNT(*) FROM country WHERE id = "${internship.country}"'));
-    if(countryExist == 1){
+    int countryExist = Sqflite.firstIntValue(await dbClient.rawQuery(
+        'SELECT COUNT(*) FROM country WHERE id = "${internship.country}"'));
+    if (countryExist == 1) {
       //ülke var
-    }else{
-      int countryID = await dbClient.rawInsert('INSERT INTO country(name), VALUES("${internship.country}");');
-
+    } else {
+      int countryID = await dbClient.rawInsert(
+          'INSERT INTO country(name), VALUES("${internship.country}");');
     }
     return null;
   }
 
   @override
-  Future<Student> getStudent(String email) async{
+  Future<Student> getStudent(String email) async {
     var dbClient = await db;
     var result = await dbClient.query("student", where: 'email = "${email}"');
-    List<Student> student = result.map((data) => Student.fromMap(data)).toList();
-    debugPrint(">>> local_db_service >>> getUser() >>> ${student[0].toString()}");
+    List<Student> student =
+        result.map((data) => Student.fromMap(data)).toList();
+    debugPrint(
+        ">>> local_db_service >>> getUser() >>> ${student[0].toString()}");
     return student[0];
   }
 
   @override
-  Future<bool> updateStudent(Student student) async{
+  Future<bool> updateStudent(Student student) async {
     var dbClient = await db;
     final String update = "UPDATE student SET "
-      "name = '${student.name}',"
-      "surname = '${student.surname}',"
-      "gender = '${student.gender}',"
-      "department = '${student.department}',"
-      "phone_number = '${student.phoneNumber}',"
-      "show_my_phone = '${student.showMyPhone}'"
-      "WHERE student_id = '${student.studentID}';";
+        "name = '${student.name}',"
+        "surname = '${student.surname}',"
+        "gender = '${student.gender}',"
+        "department = '${student.department}',"
+        "phone_number = '${student.phoneNumber}',"
+        "show_my_phone = '${student.showMyPhone}'"
+        "WHERE student_id = '${student.studentID}';";
 
     await dbClient.rawUpdate(update);
     return true;
   }
 
-  /*
-
-  Future<List<Message>> queryMessages() async{
+  @override
+  Future<bool> getInternship(
+      {String country,
+      String city,
+      String gender,
+      String department,
+      int minGPA,
+      String yearOfStudy,
+      String freeLunch,
+      String paid,
+      String fullTime,
+      String mandatory}) async{
     var dbClient = await db;
-    var result = await dbClient.query("MESSAGES", orderBy: "date");
-    debugPrint(">>>>>>>>>> $result");
-    return result.map((data) => Message.fromMap(data)).toList();
+    final String getInternship =
+        "SELECT internship.id AS id, student.gender AS gender, start_date, end_date, contact_info, free_launch, "
+        "year_of_student, gpa, is_paid, is_full_time, is_mandatory, city.name AS city_id, country.name AS country_id, "
+        "departments.name AS departments_id, contact_types.name AS contact_types_id, internship.student_id AS student_id "
+        "FROM internship, city, country, departments, contact_types, company, student "
+        "WHERE internship.city_id = city.id AND student.student_id = internship.student_id AND country.id = city.country_id "
+        "AND internship.departments_id = departments.id AND internship.contact_types_id = contact_types.id "
+        "AND internship.company_id = company.id AND "
+        "country.name LIKE '%${country ?? ""}%' AND "
+        "city.name LIKE '%${city ?? ""}%' AND "
+        "gender LIKE '%${gender ?? ""}%' AND "
+        "departments.name LIKE '%${department ?? ""}%' AND "
+        "gpa > ${minGPA ?? "0"} AND "
+        "year_of_student LIKE '%${yearOfStudy ?? ""}%' AND "
+        "is_paid LIKE '%${paid ?? ""}%' AND "
+        "is_full_time LIKE '%${fullTime ?? ""}%' AND "
+        "is_mandatory LIKE '%${mandatory ?? ""}%' AND "
+        "free_launch LIKE '%${freeLunch ?? ""}%';";
+    List<Map> list = await dbClient.rawQuery(getInternship);
+    debugPrint("]]]]]]]]]]]]]]]]]]]]]]]]]] $getInternship [[[[[[[[[[[[[[[[[[[[[[[[[[");
+    print(list);
+    return null;
   }
-
-  @override
-  Stream<List<Message>>  getMessages(String fromID, String toID) {
-    return Stream.fromFuture(queryMessages());
-  }
-
-
-  @override
-  Future<bool> signOut() async {
-    deleteDatabase(_path);
-    return true;
-  }
-
-  @override
-  Future<bool> saveUser(User user) async {
-    var dbClient = await db;
-    await dbClient.insert("USER", user.toMap());
-  }
-
-  @override
-  Future<User> getUser(String userID) async {
-    var dbClient = await db;
-    var result = await dbClient.query("USER");
-    List<User> user = result.map((data) => User.fromMap(data)).toList();
-    debugPrint(">>> local_db_service >>> getUser() >>> ${user[0].toString()}");
-    return user[0];
-  }
-
-   */
-
-
 }

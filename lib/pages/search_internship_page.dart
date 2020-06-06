@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:internshipdatabase/pages/add_internship_page.dart';
 import 'package:internshipdatabase/pages/edit_profile_page.dart';
 import 'package:internshipdatabase/values/constants.dart';
+import 'package:internshipdatabase/viewmodels/main_model.dart';
 import 'package:internshipdatabase/widgets/input_widget.dart';
+import 'package:provider/provider.dart';
 
 class SearchInternshipPage extends StatefulWidget {
   @override
@@ -11,12 +13,19 @@ class SearchInternshipPage extends StatefulWidget {
 }
 
 class _SearchInternshipPage extends State<SearchInternshipPage> {
-  bool _lunch = false;
-  bool _paid = false;
-  bool _fullTime = false;
-  bool _mandatory = false;
   int _selectedPage = 0;
   double height = 10.0;
+
+  final countryCont = TextEditingController(text: "");
+  final cityCont = TextEditingController(text: "");
+  final genderCont = TextEditingController(text: "");
+  final depCont = TextEditingController(text: "");
+  final gpaCont = TextEditingController(text: "");
+  final yearCont = TextEditingController(text: "");
+  final lunchCont = TextEditingController(text: "");
+  final paidCont = TextEditingController(text: "");
+  final fullTimeCont = TextEditingController(text: "");
+  final mandatoryCont = TextEditingController(text: "");
 
   @override
   Widget build(BuildContext context) {
@@ -91,17 +100,26 @@ class _SearchInternshipPage extends State<SearchInternshipPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      InputWidget.textField(height, null, "Country",  Icons.place, TextInputType.text, null),
-                      InputWidget.textField(height, null, "City",  Icons.place, TextInputType.text, null),
-                      InputWidget.textField(height, null, "Gender",  Icons.accessibility, TextInputType.text, null),
-                      InputWidget.textField(height, null, "Department",  Icons.assessment, TextInputType.text, null),
-                      InputWidget.textField(height, null, "Minimum GPA",  Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.textField(height, null, "Year Of Study",  Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.checkBox(height, 'Free Lunch', _lunch),
-                      InputWidget.checkBox(height, 'Paid', _paid),
-                      InputWidget.checkBox(height, 'Full Time', _fullTime),
-                      InputWidget.checkBox(height, 'Mandatory', _mandatory),
-                      InputWidget.button(height, 'Search', null),
+                      InputWidget.textField(height, countryCont, "Country",  Icons.place, TextInputType.text, null),
+                      InputWidget.textField(height, cityCont, "City",  Icons.place, TextInputType.text, null),
+                      InputWidget.textField(height, genderCont, "Gender",  Icons.accessibility, TextInputType.text, null),
+                      InputWidget.textField(height, depCont, "Department",  Icons.assessment, TextInputType.text, null),
+                      InputWidget.textField(height, gpaCont, "Minimum GPA",  Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.textField(height, yearCont, "Year Of Study",  Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.textField(height, lunchCont, "Free Lunch",  Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.textField(height, paidCont, "Paid",  Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.textField(height, fullTimeCont, "Full Time",  Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.textField(height, mandatoryCont, "Mandatory",  Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.button(height, 'Search', () => search(country: countryCont.text,
+                      city: cityCont.text,
+                      gender: genderCont.text,
+                      department: depCont.text,
+                      minGPA: int.parse(gpaCont.text ?? "0"),
+                      yearOfStudy: yearCont.text,
+                      freeLunch: lunchCont.text,
+                      paid: paidCont.text,
+                      fullTime: fullTimeCont.text,
+                      mandatory: mandatoryCont.text)),
                       SizedBox(height: height),
                     ],
                   ),
@@ -142,6 +160,21 @@ class _SearchInternshipPage extends State<SearchInternshipPage> {
     else if(_selectedPage==2){
       return profile();
     }
+  }
+
+  void search(
+      {String country,
+        String city,
+        String gender,
+        String department,
+        int minGPA,
+        String yearOfStudy,
+        String freeLunch,
+        String paid,
+        String fullTime,
+        String mandatory}) async{
+    final _mainModel = Provider.of<MainModel>(context, listen: false);
+    await _mainModel.getInternship(country: country, city: city, gender: gender, department: department, minGPA: minGPA, yearOfStudy: yearOfStudy, freeLunch: freeLunch, paid: paid, fullTime: fullTime, mandatory: mandatory);
   }
 
 }

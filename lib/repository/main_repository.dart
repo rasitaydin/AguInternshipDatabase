@@ -34,4 +34,10 @@ class MainRepository implements DBService{
     return null;
   }
 
+  @override
+  Future<bool> getInternship({String country, String city, String gender, String department, int minGPA, String yearOfStudy, String freeLunch, String paid, String fullTime, String mandatory}) async{
+    await _localDBService.getInternship(country: country, city: city, gender: gender, department: department, minGPA: minGPA, yearOfStudy: yearOfStudy, freeLunch: freeLunch, paid: paid, fullTime: fullTime, mandatory: mandatory);
+    return null;
+  }
+
 }
