@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:internshipdatabase/models/student_model.dart';
+import 'package:internshipdatabase/test_data.dart';
 import 'package:internshipdatabase/models/user_model.dart';
 import 'package:internshipdatabase/services/db_base.dart';
 import 'package:sqflite/sqflite.dart';
@@ -47,7 +47,7 @@ class LocalDBService implements DBService{
         "name TEXT);");
 
     await db.execute("CREATE TABLE country"
-        "(id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "(id INTEGER PRIMARY KEY,"
         "name TEXT);");
 
     await db.execute("CREATE TABLE departments"
@@ -97,6 +97,16 @@ class LocalDBService implements DBService{
         "FOREIGN KEY(contact_types_id) REFERENCES contact_types(id),"
         "FOREIGN KEY(company_id) REFERENCES company(id),"
         "FOREIGN KEY(student_id) REFERENCES student(student_id));");
+
+    await db.rawQuery(TestData.country);
+    await db.rawQuery(TestData.city);
+    await db.rawQuery(TestData.company);
+    await db.rawQuery(TestData.contact);
+    await db.rawQuery(TestData.departments);
+    await db.rawQuery(TestData.studentInterests);
+    await db.rawQuery(TestData.interests);
+    await db.rawQuery(TestData.student);
+    await db.rawQuery(TestData.internship);
 
   }
 
