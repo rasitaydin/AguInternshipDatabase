@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:internshipdatabase/models/student_model.dart';
+import 'package:internshipdatabase/models/user_model.dart';
 import 'package:internshipdatabase/services/db_base.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -27,8 +28,8 @@ class LocalDBService implements DBService{
 
   Future<FutureOr<void>> _onCreate(Database db, int version) async {
     await db.execute("CREATE TABLE user"
-        "(email TEXT,"
-        "password TEXT);");
+        "(mail TEXT,"
+        "pass TEXT);");
 
     await db.execute("CREATE TABLE city"
         "(id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -96,16 +97,18 @@ class LocalDBService implements DBService{
         "FOREIGN KEY(company_id) REFERENCES company(id),"
         "FOREIGN KEY(student_id) REFERENCES student(student_id));");
 
-
-
-
-
   }
 
   @override
-  Future<bool> saveStudent(Student student) async {
+  Future<bool> saveUser(User user) async {
     var dbClient = await db;
-    await dbClient.insert("city", {'name' : "mardin"});
+    int number = Sqflite.firstIntValue(await dbClient.rawQuery('SELECT COUNT(*) FROM user WHERE mail = "${user.mail}"'));
+    if(number > 0){
+      return false;
+    } else{
+      await dbClient.insert("user", user.toMap());
+      return true;
+    }
   }
 
   /*

@@ -1,7 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:internshipdatabase/models/user_model.dart';
 import 'package:internshipdatabase/values/constants.dart';
+import 'package:internshipdatabase/viewmodels/main_model.dart';
+import 'package:provider/provider.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -9,6 +12,16 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPage extends State<SignupPage> {
+  final mailCont = TextEditingController(text: "");
+  final passCont = TextEditingController(text: "");
+
+  @override
+  void dispose() {
+    mailCont.dispose();
+    passCont.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,6 +86,7 @@ class _SignupPage extends State<SignupPage> {
             decoration: secondBoxDecorationStyle,
             height: 50.0,
             child: TextFormField(
+              controller: mailCont,
               keyboardType: TextInputType.emailAddress,
               style: TextStyle(
                 color: Colors.red,
@@ -108,6 +122,7 @@ class _SignupPage extends State<SignupPage> {
               decoration: secondBoxDecorationStyle,
               height: 50.0,
               child: TextFormField(
+                controller: passCont,
                 obscureText: true,
                 style: TextStyle(
                   color: Colors.white,
@@ -132,8 +147,6 @@ class _SignupPage extends State<SignupPage> {
         ]);
   }
 
-
-
   Widget _buildSignUpBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
@@ -141,7 +154,7 @@ class _SignupPage extends State<SignupPage> {
       child: RaisedButton(
         padding: EdgeInsets.all(15.0),
         color: Colors.grey,
-        onPressed: () => Navigator.pushReplacementNamed(context, '/'),
+        onPressed: () => signUp(User(mail: mailCont.text, pass: passCont.text), context),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -160,5 +173,14 @@ class _SignupPage extends State<SignupPage> {
     );
   }
 
+  void signUp(User user, BuildContext context) async{
+    final MainModel _mainModel = Provider.of<MainModel>(context, listen: false);
+    var result = await _mainModel.saveUser(user);
+    if(result){
+      Navigator.pop(context);
+    } else{
+      //TODO Kayıt Basarısız
+    }
+  }
 
 }

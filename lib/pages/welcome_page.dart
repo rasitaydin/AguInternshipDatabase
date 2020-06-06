@@ -1,15 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:internshipdatabase/models/student_model.dart';
-import 'package:internshipdatabase/viewmodels/main_model.dart';
-import 'package:provider/provider.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-    final _mainModel = Provider.of<MainModel>(context);
-    _mainModel.saveStudent(Student());
     return Scaffold(
       body: Container(
         constraints: BoxConstraints.expand(),

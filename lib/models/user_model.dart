@@ -17,7 +17,7 @@ class User{
 
   @override
   String toString() {
-    return 'City{mail: $mail, pass: $pass}';
+    return 'User{mail: $mail, pass: $pass}';
   }
 
 }
