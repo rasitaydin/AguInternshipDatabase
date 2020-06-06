@@ -4,6 +4,7 @@ import 'package:internshipdatabase/viewmodels/main_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart' ;
 import 'pages/login_page.dart';
+import 'pages/search_internship_page.dart';
 import 'pages/signup_page.dart';
 import 'pages/welcome_page.dart';
 
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
             '/'               : (context) => WelcomePage(),
             '/signUp'         : (context) => SignupPage(),
             '/login'          : (context) => LoginPage(),
+            '/home'           : (context) => SearchInternshipPage(),
 
           },
         ));

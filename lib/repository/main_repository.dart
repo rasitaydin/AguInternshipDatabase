@@ -11,4 +11,9 @@ class MainRepository implements DBService{
     return await _localDBService.saveUser(user);
   }
 
+  @override
+  Future<bool> login(User user) async{
+    return await _localDBService.login(user);
+  }
+
 }

@@ -111,6 +111,17 @@ class LocalDBService implements DBService{
     }
   }
 
+  @override
+  Future<bool> login(User user) async{
+    var dbClient = await db;
+    int number = Sqflite.firstIntValue(await dbClient.rawQuery('SELECT COUNT(*) FROM user WHERE mail = "${user.mail}"'));
+    if(number > 0){
+      return true;
+    } else{
+      return false;
+    }
+  }
+
   /*
 
   Future<List<Message>> queryMessages() async{

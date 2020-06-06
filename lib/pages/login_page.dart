@@ -1,9 +1,10 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:internshipdatabase/models/user_model.dart';
 import 'package:internshipdatabase/values/constants.dart';
-
+import 'package:internshipdatabase/viewmodels/main_model.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,19 +12,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool _rememberMe = true;
-  TextEditingController mailController;
-  TextEditingController passController;
-
+  final mailCont = TextEditingController(text: "");
+  final passCont = TextEditingController(text: "");
 
   @override
   void dispose() {
-    mailController.dispose();
-    passController.dispose();
+    mailCont.dispose();
+    passCont.dispose();
     super.dispose();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +74,6 @@ class _LoginPageState extends State<LoginPage> {
                         height: 20.0,
                       ),
                       _buildLoginBtn(context),
-
                     ],
                   ),
                 ),
@@ -98,35 +94,25 @@ class _LoginPageState extends State<LoginPage> {
           alignment: Alignment.centerLeft,
           decoration: secondBoxDecorationStyle,
           height: 50.0,
-          child: FutureBuilder<String>(
-            builder: (context, result) {
-              debugPrint(">>> login_page >>> _buildEmailTF >>> savedMail >>> ${result.data}");
-              mailController = TextEditingController(text: result.data);
-
-                return TextFormField(
-                  controller: mailController,
-                  keyboardType: TextInputType.emailAddress,
-                  style: TextStyle(
-                    color: Colors.yellow,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'OpenSans',
-                  ),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(top: 14.0),
-                    prefixIcon: Icon(
-                      Icons.email,
-                      color: Colors.white
-                    ),
-                    hintText: 'E-mail',
-                    hintStyle: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'OpenSans',
-                    ),
-                  ),
-                );
-            },
+          child: TextFormField(
+            controller: mailCont,
+            keyboardType: TextInputType.emailAddress,
+            style: TextStyle(
+              color: Colors.yellow,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(Icons.email, color: Colors.white),
+              hintText: 'E-mail',
+              hintStyle: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'OpenSans',
+              ),
+            ),
           ),
         ),
       ],
@@ -142,31 +128,25 @@ class _LoginPageState extends State<LoginPage> {
           alignment: Alignment.centerLeft,
           decoration: secondBoxDecorationStyle,
           height: 50.0,
-          child: FutureBuilder<String>(
-            builder: (context, result){
-                return TextFormField(
-                  obscureText: true,
-                  style: TextStyle(
-                    color: Colors.yellow,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'OpenSans',
-                  ),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(top: 14.0),
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: Colors.white
-                    ),
-                    hintText: 'Password',
-                    hintStyle: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'OpenSans',
-                    ),
-                  ),
-                );
-            },
+          child: TextFormField(
+            controller: passCont,
+            obscureText: true,
+            style: TextStyle(
+              color: Colors.yellow,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(Icons.lock, color: Colors.white),
+              hintText: 'Password',
+              hintStyle: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'OpenSans',
+              ),
+            ),
           ),
         ),
       ],
@@ -180,8 +160,7 @@ class _LoginPageState extends State<LoginPage> {
       child: RaisedButton(
         padding: EdgeInsets.all(15.0),
         color: Colors.yellow,
-//        onLongPress: () => onLogInLongPressed(mailController.text, passController.text, context),
-//        onPressed: () => onLogInPressed(mailController.text, passController.text, context),
+        onPressed: () => login(User(mail: mailCont.text, pass: passCont.text), context),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -200,8 +179,13 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
-
-
-
+  void login(User user, BuildContext context) async{
+    MainModel _mainModel = Provider.of<MainModel>(context, listen: false);
+    var result = await _mainModel.login(user);
+    if(result){
+      Navigator.pushReplacementNamed(context, '/home');
+    } else{
+      //TODO Giris Basarısız
+    }
+  }
 }

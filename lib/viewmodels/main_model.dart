@@ -28,4 +28,14 @@ class MainModel with ChangeNotifier implements DBService{
     }
   }
 
+  @override
+  Future<bool> login(User user) async{
+    try {
+      state = ViewState.BUSY;
+      return await _userRepository.login(user);
+    } finally {
+      _state = ViewState.IDLE;
+    }
+  }
+
 }
