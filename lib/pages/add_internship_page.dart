@@ -102,7 +102,7 @@ class _AddInternshipPage extends State<AddInternshipPage> {
                       InputWidget.checkBox(height, 'Paid', _paid),
                       InputWidget.checkBox(height, 'Full Time', _fullTime),
                       InputWidget.checkBox(height, 'Mandatory', _mandatory),
-                      InputWidget.button( height, 'Confirm', () => {}, context),
+                      InputWidget.button( height, 'Confirm', () => {}),
                       SizedBox(height: height),
                     ],
                   ),

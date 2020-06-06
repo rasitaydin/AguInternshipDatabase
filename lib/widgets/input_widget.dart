@@ -73,7 +73,7 @@ class InputWidget {
     ]);
   }
 
-  static Widget button(double height, String title, Function method, BuildContext context){
+  static Widget button(double height, String title, void method){
     return Column(
       children: <Widget>[
         SizedBox(height: height),
@@ -83,7 +83,7 @@ class InputWidget {
           child: RaisedButton(
             padding: EdgeInsets.all(15.0),
             color: Colors.blue,
-            onPressed: method,
+            onPressed: () => method,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30.0),
             ),

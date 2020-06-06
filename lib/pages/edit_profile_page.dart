@@ -96,7 +96,7 @@ class _ProfilePage extends State<EditProfilePage> {
                       InputWidget.textField(height, null, "Interest Areas",  Icons.account_balance, TextInputType.text),
                       InputWidget.textField(height, null, "Phone",  Icons.phone, TextInputType.phone),
                       InputWidget.checkBox(height, 'Show My Phone Number', _showMyNumber),
-                      InputWidget.button(height, 'Update', () => {}, context),
+                      InputWidget.button(height, 'Update', () => {}),
                       SizedBox(height: height),
                     ],
                   ),

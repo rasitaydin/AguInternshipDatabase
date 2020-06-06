@@ -102,7 +102,7 @@ class _SearchInternshipPage extends State<SearchInternshipPage> {
                       InputWidget.checkBox(height, 'Paid', _paid),
                       InputWidget.checkBox(height, 'Full Time', _fullTime),
                       InputWidget.checkBox(height, 'Mandatory', _mandatory),
-                      InputWidget.button(height, 'Search', null, context),
+                      InputWidget.button(height, 'Search', null),
                       SizedBox(height: height),
                     ],
                   ),

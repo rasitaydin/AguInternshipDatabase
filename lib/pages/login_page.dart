@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:internshipdatabase/models/user_model.dart';
 import 'package:internshipdatabase/values/constants.dart';
 import 'package:internshipdatabase/viewmodels/main_model.dart';
+import 'package:internshipdatabase/widgets/input_widget.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -66,113 +67,14 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 50.0),
-                      _buildEmailTF(),
-                      SizedBox(height: 10.0),
-                      _buildPasswordTF(),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      _buildLoginBtn(context),
+                      InputWidget.textField(50, mailCont, "E-mail",  Icons.email, TextInputType.text),
+                      InputWidget.textField(10, passCont, "Password",  Icons.lock, TextInputType.text),
+                      InputWidget.button(20, 'LOGIN', login(User(mail: mailCont.text, pass: passCont.text), context)),
                     ],
                   ),
                 ),
               )
             ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildEmailTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 20.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: secondBoxDecorationStyle,
-          height: 50.0,
-          child: TextFormField(
-            controller: mailCont,
-            keyboardType: TextInputType.emailAddress,
-            style: TextStyle(
-              color: Colors.yellow,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'OpenSans',
-            ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(Icons.email, color: Colors.white),
-              hintText: 'E-mail',
-              hintStyle: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans',
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPasswordTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 25.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: secondBoxDecorationStyle,
-          height: 50.0,
-          child: TextFormField(
-            controller: passCont,
-            obscureText: true,
-            style: TextStyle(
-              color: Colors.yellow,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'OpenSans',
-            ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(Icons.lock, color: Colors.white),
-              hintText: 'Password',
-              hintStyle: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans',
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildLoginBtn(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
-      width: double.infinity,
-      child: RaisedButton(
-        padding: EdgeInsets.all(15.0),
-        color: Colors.yellow,
-        onPressed: () => login(User(mail: mailCont.text, pass: passCont.text), context),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        child: Text(
-          'LOGIN',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            letterSpacing: 1.5,
-            fontSize: 15.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
           ),
         ),
       ),
