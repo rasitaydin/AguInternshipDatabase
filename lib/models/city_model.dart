@@ -14,9 +14,9 @@ class City{
   }
 
   City.fromMap(Map<String, dynamic> map):
-    id = map['id'],
+    id = map['id'].toString(),
     name = map['name'],
-    countryID = map['country_id'];
+    countryID = map['country_id'].toString();
 
   @override
   String toString() {

@@ -12,7 +12,7 @@ class ContactType{
   }
 
   ContactType.fromMap(Map<String, dynamic> map):
-        id = map['id'],
+        id = map['id'].toString(),
         name = map['name'];
 
   @override

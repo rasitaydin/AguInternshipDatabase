@@ -12,7 +12,7 @@ class Company{
   }
 
   Company.fromMap(Map<String, dynamic> map):
-        id = map['id'],
+        id = map['id'].toString(),
         name = map['name'];
 
   @override

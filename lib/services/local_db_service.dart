@@ -150,7 +150,7 @@ class LocalDBService implements DBService {
   @override
   Future<bool> saveInternship(Internship internship) async {
     var dbClient = await db;
-    Internship add;
+    Internship add = Internship();
 
     int countryNumber = Sqflite.firstIntValue(await dbClient
         .rawQuery('SELECT COUNT(*) FROM country WHERE name = "${internship.country}"'));
@@ -168,9 +168,9 @@ class LocalDBService implements DBService {
       await dbClient.rawInsert('INSERT INTO company (name) VALUES ("${internship.company}");');
 
     int departmentNumber = Sqflite.firstIntValue(await dbClient
-        .rawQuery('SELECT COUNT(*) FROM department WHERE name = "${internship.department}"'));
+        .rawQuery('SELECT COUNT(*) FROM departments WHERE name = "${internship.department}"'));
     if(departmentNumber == 0)
-      await dbClient.rawInsert('INSERT INTO department (name) VALUES ("${internship.department}");');
+      await dbClient.rawInsert('INSERT INTO departments (name) VALUES ("${internship.department}");');
 
     int contactTypeNumber = Sqflite.firstIntValue(await dbClient
         .rawQuery('SELECT COUNT(*) FROM contact_types WHERE name = "${internship.contactType}"'));
@@ -190,7 +190,7 @@ class LocalDBService implements DBService {
     Company myCompany = companyResult.map((data) => Company.fromMap(data)).toList()[0];
     add.company = myCompany.id;
 
-    var departmentResult = await dbClient.query("department", where: "name = '${internship.department}'", limit: 1);
+    var departmentResult = await dbClient.query("departments", where: "name = '${internship.department}'", limit: 1);
     Department myDepartment = departmentResult.map((data) => Department.fromMap(data)).toList()[0];
     add.department = myDepartment.id;
 
