@@ -24,7 +24,7 @@ class _SearchInternshipPage2 extends State<SearhResultPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         title: Text(
           "Search Internship",
           style: TextStyle(
@@ -58,7 +58,7 @@ class _SearchInternshipPage2 extends State<SearhResultPage> {
               padding: EdgeInsets.only(top: 15),
               child: Column(
                 children: <Widget>[
-                  Text("Birisini Seç",
+                  Text("Choose Someone",
                       style: TextStyle(
                           color: Colors.white,
                           letterSpacing: 1.5,
@@ -92,15 +92,24 @@ class _SearchInternshipPage2 extends State<SearhResultPage> {
                               child: Padding(
                                 padding: EdgeInsets.only(top: 10, bottom: 10),
                                 child: ListTile(
-                                  leading: Text(data[index].company),
+                                  leading: Text(data[index].company,style: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.white,
+                                      fontFamily: 'OpenSans',
+                                      fontWeight: FontWeight.bold),),
                                   title: Text(
                                     data[index].country,
                                     style: TextStyle(
-                                        fontSize: 24.0,
+                                        fontSize: 16.0,
                                         color: Colors.white,
                                         fontFamily: 'OpenSans',
                                         fontWeight: FontWeight.bold),
                                   ),
+                                  trailing: Text(data[index].department,style: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.white,
+                                      fontFamily: 'OpenSans',
+                                      fontWeight: FontWeight.bold), ),
                                 ),
                               ),
                             ));
