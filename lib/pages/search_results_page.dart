@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:internshipdatabase/models/internship_model.dart';
 import 'package:internshipdatabase/pages/internship_details_page.dart';
@@ -104,6 +105,7 @@ class _SearchInternshipPage2 extends State<SearhResultPage> {
                                         color: Colors.white,
                                         fontFamily: 'OpenSans',
                                         fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
                                   ),
                                   trailing: Text(data[index].department,style: TextStyle(
                                       fontSize: 16.0,
