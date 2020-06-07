@@ -1,6 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:internshipdatabase/models/city_model.dart';
+import 'package:internshipdatabase/models/company_model.dart';
+import 'package:internshipdatabase/models/contact_type_model.dart';
+import 'package:internshipdatabase/models/country_model.dart';
+import 'package:internshipdatabase/models/department_model.dart';
 import 'package:internshipdatabase/models/internship_model.dart';
 import 'package:internshipdatabase/models/student_model.dart';
 import 'package:internshipdatabase/test_data.dart';
@@ -49,7 +54,7 @@ class LocalDBService implements DBService {
         "name TEXT);");
 
     await db.execute("CREATE TABLE country"
-        "(id INTEGER PRIMARY KEY,"
+        "(id INTEGER PRIMARY KEY AUTOINCREMENT,"
         "name TEXT);");
 
     await db.execute("CREATE TABLE departments"
@@ -145,15 +150,66 @@ class LocalDBService implements DBService {
   @override
   Future<bool> saveInternship(Internship internship) async {
     var dbClient = await db;
-    int countryExist = Sqflite.firstIntValue(await dbClient.rawQuery(
-        'SELECT COUNT(*) FROM country WHERE id = "${internship.country}"'));
-    if (countryExist == 1) {
-      //ülke var
-    } else {
-      int countryID = await dbClient.rawInsert(
-          'INSERT INTO country(name), VALUES("${internship.country}");');
-    }
-    return null;
+    Internship add;
+
+    int countryNumber = Sqflite.firstIntValue(await dbClient
+        .rawQuery('SELECT COUNT(*) FROM country WHERE name = "${internship.country}"'));
+    if(countryNumber == 0)
+      await dbClient.rawInsert('INSERT INTO country (name) VALUES ("${internship.country}");');
+
+    int cityNumber = Sqflite.firstIntValue(await dbClient
+        .rawQuery('SELECT COUNT(*) FROM city WHERE name = "${internship.city}"'));
+    if(cityNumber == 0)
+      await dbClient.rawInsert('INSERT INTO city (name) VALUES ("${internship.city}");');
+
+    int companyNumber = Sqflite.firstIntValue(await dbClient
+        .rawQuery('SELECT COUNT(*) FROM company WHERE name = "${internship.company}"'));
+    if(companyNumber == 0)
+      await dbClient.rawInsert('INSERT INTO company (name) VALUES ("${internship.company}");');
+
+    int departmentNumber = Sqflite.firstIntValue(await dbClient
+        .rawQuery('SELECT COUNT(*) FROM department WHERE name = "${internship.department}"'));
+    if(departmentNumber == 0)
+      await dbClient.rawInsert('INSERT INTO department (name) VALUES ("${internship.department}");');
+
+    int contactTypeNumber = Sqflite.firstIntValue(await dbClient
+        .rawQuery('SELECT COUNT(*) FROM contact_types WHERE name = "${internship.contactType}"'));
+    if(contactTypeNumber == 0)
+      await dbClient.rawInsert('INSERT INTO contact_types (name) VALUES ("${internship.contactType}");');
+
+
+    var countryResult = await dbClient.query("country", where: "name = '${internship.country}'", limit: 1);
+    Country myCountry = countryResult.map((data) => Country.fromMap(data)).toList()[0];
+    add.country = myCountry.id;
+
+    var cityResult = await dbClient.query("city", where: "name = '${internship.city}'", limit: 1);
+    City myCity = cityResult.map((data) => City.fromMap(data)).toList()[0];
+    add.city = myCity.id;
+
+    var companyResult = await dbClient.query("company", where: "name = '${internship.company}'", limit: 1);
+    Company myCompany = companyResult.map((data) => Company.fromMap(data)).toList()[0];
+    add.company = myCompany.id;
+
+    var departmentResult = await dbClient.query("department", where: "name = '${internship.department}'", limit: 1);
+    Department myDepartment = departmentResult.map((data) => Department.fromMap(data)).toList()[0];
+    add.department = myDepartment.id;
+
+    var contactTypeResult = await dbClient.query("contact_types", where: "name = '${internship.contactType}'", limit: 1);
+    ContactType myContactType = contactTypeResult.map((data) => ContactType.fromMap(data)).toList()[0];
+    add.contactType = myContactType.id;
+    
+    add.startDate = internship.startDate;
+    add.endDate = internship.endDate;
+    add.freeLunch = internship.freeLunch;
+    add.yearOfStudent = internship.yearOfStudent;
+    add.gpa = internship.gpa;
+    add.isPaid = internship.isPaid;
+    add.isFullTime = internship.isFullTime;
+    add.isMandatory = internship.isMandatory;
+    add.contactInfo = internship.contactInfo;
+    add.student = internship.student;
+
+    await dbClient.insert("internship", add.toMap());
   }
 
   @override
@@ -215,7 +271,7 @@ class LocalDBService implements DBService {
         "is_mandatory LIKE '%${mandatory ?? ""}%' AND "
         "free_launch LIKE '%${freeLunch ?? ""}%';";
     List<Map> list = await dbClient.rawQuery(getInternship);
-    debugPrint("]]]]]]]]]]]]]]]]]]]]]]]]]] $getInternship [[[[[[[[[[[[[[[[[[[[[[[[[[");
+    debugPrint("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@     $getInternship     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ");
     print(list);
     return null;
   }
