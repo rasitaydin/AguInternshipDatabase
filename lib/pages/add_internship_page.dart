@@ -25,12 +25,8 @@ class _AddInternshipPage extends State<AddInternshipPage> {
   final contactInfoCont = TextEditingController(text: "");
   final gpaCont = TextEditingController(text: "");
   final yearCont = TextEditingController(text: "");
-  final lunchCont = TextEditingController(text: "");
   final startCont = TextEditingController(text: "");
   final endCont = TextEditingController(text: "");
-  final paidCont = TextEditingController(text: "");
-  final fullTimeCont = TextEditingController(text: "");
-  final mandatoryCont = TextEditingController(text: "");
 
   bool freeLunch = false;
   bool isPaid = false;
