@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:internshipdatabase/models/city_model.dart';
 import 'package:internshipdatabase/models/company_model.dart';
@@ -210,12 +209,13 @@ class LocalDBService implements DBService {
     add.student = internship.student;
 
     await dbClient.insert("internship", add.toMap());
+    return true;
   }
 
   @override
   Future<Student> getStudent(String email) async {
     var dbClient = await db;
-    var result = await dbClient.query("student", where: 'email = "${email}"');
+    var result = await dbClient.query("student", where: 'email = "$email"');
     List<Student> student =
         result.map((data) => Student.fromMap(data)).toList();
     debugPrint(
@@ -225,7 +225,7 @@ class LocalDBService implements DBService {
 
   Future<Student> getStudentViaID(String id) async {
     var dbClient = await db;
-    var result = await dbClient.query("student", where: 'student_id = "${id}"');
+    var result = await dbClient.query("student", where: 'student_id = "$id"');
     List<Student> student =
     result.map((data) => Student.fromMap(data)).toList();
     debugPrint(

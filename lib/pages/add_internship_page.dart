@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:internshipdatabase/models/internship_model.dart';
 import 'package:internshipdatabase/pages/edit_profile_page.dart';
 import 'package:internshipdatabase/pages/search_internship_page.dart';
-import 'package:internshipdatabase/values/constants.dart';
 import 'package:internshipdatabase/viewmodels/main_model.dart';
 import 'package:internshipdatabase/widgets/input_widget.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +39,7 @@ class _AddInternshipPage extends State<AddInternshipPage> {
         type: BottomNavigationBarType.fixed,
         iconSize: 35,
         onTap:  (_selectedPage) {
-          ChangePage(_selectedPage);
+          changePage(_selectedPage);
           if(_selectedPage==0){
             Navigator.pushReplacementNamed(context, '/home');
           }
@@ -152,13 +151,13 @@ class _AddInternshipPage extends State<AddInternshipPage> {
   }
 
   int selectedPage =0;
-  void ChangePage(int index){
+  void changePage(int index){
     setState(() {
       selectedPage =index;
     });
   }
 
-  Widget ShowPage(){
+  Widget showPage(){
     if(selectedPage==0){
       return homepage();
     }
@@ -168,5 +167,6 @@ class _AddInternshipPage extends State<AddInternshipPage> {
     else if(selectedPage==2){
       return profile();
     }
+    return null;
   }
 }

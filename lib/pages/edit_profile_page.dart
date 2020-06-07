@@ -24,6 +24,7 @@ class _ProfilePage extends State<EditProfilePage> {
   TextEditingController genderCont;
   TextEditingController departmentCont;
   TextEditingController phoneCont;
+  bool showMyPhone = true;
 
   @override
   void dispose() {
@@ -128,7 +129,7 @@ class _ProfilePage extends State<EditProfilePage> {
                             InputWidget.textField(height, genderCont, "Gender",  Icons.accessibility, TextInputType.text, _student.gender),
                             InputWidget.textField(height, departmentCont, "Department",  Icons.assessment, TextInputType.text, _student.department),
                             InputWidget.textField(height, phoneCont, "Phone",  Icons.phone, TextInputType.phone, _student.phoneNumber),
-                            InputWidget.checkBox(height, 'Show My Phone Number', _showMyNumber),
+                            checkBox(),
                             InputWidget.button(height, 'Update', () => update(Student(
                               studentID: int.parse(idCont.text),
                               name: nameCont.text,
@@ -136,7 +137,7 @@ class _ProfilePage extends State<EditProfilePage> {
                               gender: genderCont.text,
                               department: departmentCont.text,
                               phoneNumber: phoneCont.text,
-                              showMyPhone: "Y"
+                              showMyPhone: showMyPhone ? "Y" : "N"
                             ))),
                             SizedBox(height: height),
                           ],
@@ -184,6 +185,37 @@ class _ProfilePage extends State<EditProfilePage> {
   void update(Student student) async{
     final _mainModel = Provider.of<MainModel>(context, listen: false);
     _mainModel.updateStudent(student);
+  }
+
+  Widget checkBox() {
+    return Column(children: <Widget>[
+      SizedBox(height: height),
+      Container(
+        height: 40.0,
+        child: Row(
+          children: <Widget>[
+            Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.blue),
+              child: Checkbox(
+                value: showMyPhone,
+                activeColor: Colors.blue,
+                checkColor: Colors.white,
+                onChanged: (value) {
+                  setState(() {
+                    showMyPhone = value;
+                  });
+                },
+              ),
+            ),
+            Text("Show My Phone Number",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue)),
+          ],
+        ),
+      )
+    ]);
   }
 
 }

@@ -14,6 +14,7 @@ class MainModel with ChangeNotifier implements DBService{
   User _user;
 
   ViewState get state => _state;
+  // ignore: unnecessary_getters_setters
   User get user => _user;
 
   set state(ViewState value) {
@@ -21,6 +22,7 @@ class MainModel with ChangeNotifier implements DBService{
     notifyListeners();
   }
 
+  // ignore: unnecessary_getters_setters
   set user(User value) {
     _user = value;
   }

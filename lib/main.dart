@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:internshipdatabase/locator.dart';
 import 'package:internshipdatabase/pages/edit_profile_page.dart';
-import 'package:internshipdatabase/pages/search_results_page.dart';
 import 'package:internshipdatabase/viewmodels/main_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart' ;

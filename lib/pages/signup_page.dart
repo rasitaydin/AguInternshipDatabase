@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:internshipdatabase/models/user_model.dart';
-import 'package:internshipdatabase/values/constants.dart';
 import 'package:internshipdatabase/viewmodels/main_model.dart';
 import 'package:internshipdatabase/widgets/input_widget.dart';
 import 'package:provider/provider.dart';

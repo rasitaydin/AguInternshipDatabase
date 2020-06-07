@@ -4,7 +4,6 @@ import 'package:internshipdatabase/models/internship_model.dart';
 import 'package:internshipdatabase/pages/add_internship_page.dart';
 import 'package:internshipdatabase/pages/edit_profile_page.dart';
 import 'package:internshipdatabase/pages/search_results_page.dart';
-import 'package:internshipdatabase/values/constants.dart';
 import 'package:internshipdatabase/viewmodels/main_model.dart';
 import 'package:internshipdatabase/widgets/input_widget.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +35,7 @@ class _SearchInternshipPage extends State<SearchInternshipPage> {
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedPage,
         onTap: (_selectedPage) {
-          ChangePage(_selectedPage);
+          changePage(_selectedPage);
           if (_selectedPage == 0) {
             Navigator.pushReplacementNamed(context, '/home');
           } else if (_selectedPage == 1) {
@@ -159,19 +158,19 @@ class _SearchInternshipPage extends State<SearchInternshipPage> {
     return AddInternshipPage();
   }
 
-  void ChangePage(int index) {
+  void changePage(int index) {
     setState(() {
       _selectedPage = index;
-      ShowPage();
+      showPage();
     });
   }
 
-  Widget ShowPage() {
+  Widget showPage() {
     if (_selectedPage == 0) {
       return homepage();
     } else if (_selectedPage == 1) {
       return add();
-    } else if (_selectedPage == 2) {
+    } else {
       return profile();
     }
   }
