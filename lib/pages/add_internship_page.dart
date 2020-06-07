@@ -32,6 +32,11 @@ class _AddInternshipPage extends State<AddInternshipPage> {
   final fullTimeCont = TextEditingController(text: "");
   final mandatoryCont = TextEditingController(text: "");
 
+  bool freeLunch = false;
+  bool isPaid = false;
+  bool isFullTime = false;
+  bool isMandatory = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,18 +115,18 @@ class _AddInternshipPage extends State<AddInternshipPage> {
                       InputWidget.textField(height, departmentCont, "Department of Company",  Icons.assessment, TextInputType.text, null),
                       InputWidget.textField(height, contactType, "Contact Type",  Icons.check_box, TextInputType.text, null),
                       InputWidget.textField(height, contactInfoCont, "Contact Info",  Icons.check_box, TextInputType.text, null),
-                      InputWidget.textField(height, startCont, "Start Date",  Icons.date_range, TextInputType.datetime, null),
+                      InputWidget.textField(height, startCont, "Start Date",  Icons.date_range, TextInputType.text, null),
                       InputWidget.textField(height, endCont, "End Date",  Icons.date_range, TextInputType.text, null),
                       InputWidget.textField(height, yearCont, "Year Of Study",  Icons.calendar_today, TextInputType.number, null),
                       InputWidget.textField(height, gpaCont, "GPA",  Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.textField(height, lunchCont, "Free Lunch",  Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.textField(height, paidCont, "Paid",  Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.textField(height, fullTimeCont, "Full Time",  Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.textField(height, mandatoryCont, "Mandatory",  Icons.calendar_today, TextInputType.number, null),
+                      FreeLunch(),
+                      Paid(),
+                      FullTime(),
+                      Mandatory(),
                       InputWidget.button( height, 'Confirm', () => saveInternship(Internship(country: countryCont.text,
                       city: cityCont.text, company: companyCont.text, department: departmentCont.text, contactType: contactType.text,
-                      startDate: startCont.text, endDate: endCont.text, yearOfStudent: yearCont.text, gpa: gpaCont.text, freeLunch: lunchCont.text,
-                      isPaid: paidCont.text, isFullTime: fullTimeCont.text, isMandatory: mandatoryCont.text, contactInfo: contactInfoCont.text))),
+                      startDate: startCont.text, endDate: endCont.text, yearOfStudent: yearCont.text, gpa: gpaCont.text, freeLunch: freeLunch ? "Y" : "N",
+                      isPaid: isPaid ? "Y" : "N", isFullTime: isFullTime ? "Y" : "N", isMandatory: isMandatory ? "Y" : "N", contactInfo: contactInfoCont.text))),
                       SizedBox(height: height),
                     ],
                   ),
@@ -169,4 +174,129 @@ class _AddInternshipPage extends State<AddInternshipPage> {
     }
     return null;
   }
+
+  Widget FreeLunch() {
+    return Column(children: <Widget>[
+      SizedBox(height: height),
+      Container(
+        height: 40.0,
+        child: Row(
+          children: <Widget>[
+            Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.blue),
+              child: Checkbox(
+                value: freeLunch,
+                activeColor: Colors.blue,
+                checkColor: Colors.white,
+                onChanged: (value) {
+                  setState(() {
+                    freeLunch = value;
+                  });
+                },
+              ),
+            ),
+            Text("Free Lunch",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue)),
+          ],
+        ),
+      )
+    ]);
+  }
+
+  Widget Paid() {
+    return Column(children: <Widget>[
+      SizedBox(height: height),
+      Container(
+        height: 40.0,
+        child: Row(
+          children: <Widget>[
+            Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.blue),
+              child: Checkbox(
+                value: isPaid,
+                activeColor: Colors.blue,
+                checkColor: Colors.white,
+                onChanged: (value) {
+                  setState(() {
+                    isPaid = value;
+                  });
+                },
+              ),
+            ),
+            Text("Paid",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue)),
+          ],
+        ),
+      )
+    ]);
+  }
+
+  Widget Mandatory() {
+    return Column(children: <Widget>[
+      SizedBox(height: height),
+      Container(
+        height: 40.0,
+        child: Row(
+          children: <Widget>[
+            Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.blue),
+              child: Checkbox(
+                value: isMandatory,
+                activeColor: Colors.blue,
+                checkColor: Colors.white,
+                onChanged: (value) {
+                  setState(() {
+                    isMandatory = value;
+                  });
+                },
+              ),
+            ),
+            Text("Mandatory",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue)),
+          ],
+        ),
+      )
+    ]);
+  }
+
+  Widget FullTime() {
+    return Column(children: <Widget>[
+      SizedBox(height: height),
+      Container(
+        height: 40.0,
+        child: Row(
+          children: <Widget>[
+            Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.blue),
+              child: Checkbox(
+                value: isFullTime,
+                activeColor: Colors.blue,
+                checkColor: Colors.white,
+                onChanged: (value) {
+                  setState(() {
+                    isFullTime = value;
+                  });
+                },
+              ),
+            ),
+            Text("Full Time",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue)),
+          ],
+        ),
+      )
+    ]);
+  }
+
 }
