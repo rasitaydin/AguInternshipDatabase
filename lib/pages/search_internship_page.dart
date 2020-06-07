@@ -17,16 +17,17 @@ class _SearchInternshipPage extends State<SearchInternshipPage> {
   int _selectedPage = 0;
   double height = 10.0;
 
+  bool freeLunch = false;
+  bool isPaid = false;
+  bool isFullTime = false;
+  bool isMandatory = false;
+
   final countryCont = TextEditingController(text: "");
   final cityCont = TextEditingController(text: "");
-  final genderCont = TextEditingController(text: "");
+  final compCont = TextEditingController(text: "");
   final depCont = TextEditingController(text: "");
   final gpaCont = TextEditingController(text: "");
   final yearCont = TextEditingController(text: "");
-  final lunchCont = TextEditingController(text: "");
-  final paidCont = TextEditingController(text: "");
-  final fullTimeCont = TextEditingController(text: "");
-  final mandatoryCont = TextEditingController(text: "");
 
   @override
   Widget build(BuildContext context) {
@@ -105,35 +106,32 @@ class _SearchInternshipPage extends State<SearchInternshipPage> {
                           Icons.place, TextInputType.text, null),
                       InputWidget.textField(height, cityCont, "City",
                           Icons.place, TextInputType.text, null),
-                      InputWidget.textField(height, genderCont, "Gender",
-                          Icons.accessibility, TextInputType.text, null),
+                      InputWidget.textField(height, compCont, "Company",
+                          Icons.account_balance, TextInputType.text, null),
                       InputWidget.textField(height, depCont, "Department",
                           Icons.assessment, TextInputType.text, null),
-                      InputWidget.textField(height, gpaCont, "Minimum GPA",
+                      InputWidget.textField(height, gpaCont, "GPA",
                           Icons.calendar_today, TextInputType.number, null),
                       InputWidget.textField(height, yearCont, "Year Of Study",
                           Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.textField(height, lunchCont, "Free Lunch",
-                          Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.textField(height, paidCont, "Paid",
-                          Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.textField(height, fullTimeCont, "Full Time",
-                          Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.textField(height, mandatoryCont, "Mandatory",
-                          Icons.calendar_today, TextInputType.number, null),
+                      FreeLunch(),
+                      Paid(),
+                      FullTime(),
+                      Mandatory(),
                       InputWidget.button(
                           height,
                           'Search',
                           () => search(Internship(
+                              company: compCont.text,
                               country: countryCont.text,
                               city: cityCont.text,
                               department: depCont.text,
-                              gpa: gpaCont.text,
+                              gpa: gpaCont.text ?? 4,
                               yearOfStudent: yearCont.text,
-                              freeLunch: lunchCont.text,
-                              isPaid: paidCont.text,
-                              isFullTime: fullTimeCont.text,
-                              isMandatory: mandatoryCont.text))),
+                              freeLunch: freeLunch ? "Y" : "",
+                              isPaid: isPaid ? "Y" : "",
+                              isFullTime: isFullTime ? "Y" : "",
+                              isMandatory: isMandatory ? "Y" : ""))),
                       SizedBox(height: height),
                     ],
                   ),
@@ -180,5 +178,129 @@ class _SearchInternshipPage extends State<SearchInternshipPage> {
     await _mainModel.getInternship(internship);
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => SearhResultPage(internship)));
+  }
+
+  Widget FreeLunch() {
+    return Column(children: <Widget>[
+      SizedBox(height: height),
+      Container(
+        height: 40.0,
+        child: Row(
+          children: <Widget>[
+            Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.blue),
+              child: Checkbox(
+                value: freeLunch,
+                activeColor: Colors.blue,
+                checkColor: Colors.white,
+                onChanged: (value) {
+                  setState(() {
+                    freeLunch = value;
+                  });
+                },
+              ),
+            ),
+            Text("Free Lunch",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue)),
+          ],
+        ),
+      )
+    ]);
+  }
+
+  Widget Paid() {
+    return Column(children: <Widget>[
+      SizedBox(height: height),
+      Container(
+        height: 40.0,
+        child: Row(
+          children: <Widget>[
+            Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.blue),
+              child: Checkbox(
+                value: isPaid,
+                activeColor: Colors.blue,
+                checkColor: Colors.white,
+                onChanged: (value) {
+                  setState(() {
+                    isPaid = value;
+                  });
+                },
+              ),
+            ),
+            Text("Paid",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue)),
+          ],
+        ),
+      )
+    ]);
+  }
+
+  Widget Mandatory() {
+    return Column(children: <Widget>[
+      SizedBox(height: height),
+      Container(
+        height: 40.0,
+        child: Row(
+          children: <Widget>[
+            Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.blue),
+              child: Checkbox(
+                value: isMandatory,
+                activeColor: Colors.blue,
+                checkColor: Colors.white,
+                onChanged: (value) {
+                  setState(() {
+                    isMandatory = value;
+                  });
+                },
+              ),
+            ),
+            Text("Mandatory",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue)),
+          ],
+        ),
+      )
+    ]);
+  }
+
+  Widget FullTime() {
+    return Column(children: <Widget>[
+      SizedBox(height: height),
+      Container(
+        height: 40.0,
+        child: Row(
+          children: <Widget>[
+            Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.blue),
+              child: Checkbox(
+                value: isFullTime,
+                activeColor: Colors.blue,
+                checkColor: Colors.white,
+                onChanged: (value) {
+                  setState(() {
+                    isFullTime = value;
+                  });
+                },
+              ),
+            ),
+            Text("Full Time",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue)),
+          ],
+        ),
+      )
+    ]);
   }
 }

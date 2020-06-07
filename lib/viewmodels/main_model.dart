@@ -12,6 +12,14 @@ class MainModel with ChangeNotifier implements DBService{
   ViewState _state = ViewState.IDLE;
   MainRepository _userRepository = locator<MainRepository>();
   User _user;
+  Student _student;
+
+
+  Student get student => _student;
+
+  set student(Student value) {
+    _student = value;
+  }
 
   ViewState get state => _state;
   // ignore: unnecessary_getters_setters

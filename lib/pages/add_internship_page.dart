@@ -137,7 +137,8 @@ class _AddInternshipPage extends State<AddInternshipPage> {
 
   void saveInternship (Internship internship) async{
     final _mainModel = Provider.of<MainModel>(context, listen: false);
-    internship.student = _mainModel.user.studentID;
+    _mainModel.student = await _mainModel.getStudent(_mainModel.user.mail);
+    internship.student = _mainModel.student.studentID.toString();
     await _mainModel.saveInternship(internship);
   }
 
