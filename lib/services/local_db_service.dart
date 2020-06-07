@@ -223,6 +223,16 @@ class LocalDBService implements DBService {
     return student[0];
   }
 
+  Future<Student> getStudentViaID(String id) async {
+    var dbClient = await db;
+    var result = await dbClient.query("student", where: 'student_id = "${id}"');
+    List<Student> student =
+    result.map((data) => Student.fromMap(data)).toList();
+    debugPrint(
+        ">>> local_db_service >>> getUser() >>> ${student[0].toString()}");
+    return student[0];
+  }
+
   @override
   Future<bool> updateStudent(Student student) async {
     var dbClient = await db;
@@ -240,39 +250,34 @@ class LocalDBService implements DBService {
   }
 
   @override
-  Future<bool> getInternship(
-      {String country,
-      String city,
-      String gender,
-      String department,
-      int minGPA,
-      String yearOfStudy,
-      String freeLunch,
-      String paid,
-      String fullTime,
-      String mandatory}) async{
+  Future<List<Internship>> getInternship(Internship internship) async{
     var dbClient = await db;
     final String getInternship =
-        "SELECT internship.id AS id, student.gender AS gender, start_date, end_date, contact_info, free_launch, "
+        "SELECT internship.id AS id, student.gender AS gender, start_date, end_date, company.name AS company_id, contact_info, free_launch, "
         "year_of_student, gpa, is_paid, is_full_time, is_mandatory, city.name AS city_id, country.name AS country_id, "
         "departments.name AS departments_id, contact_types.name AS contact_types_id, internship.student_id AS student_id "
         "FROM internship, city, country, departments, contact_types, company, student "
         "WHERE internship.city_id = city.id AND student.student_id = internship.student_id AND country.id = city.country_id "
         "AND internship.departments_id = departments.id AND internship.contact_types_id = contact_types.id "
         "AND internship.company_id = company.id AND "
-        "country.name LIKE '%${country ?? ""}%' AND "
-        "city.name LIKE '%${city ?? ""}%' AND "
-        "gender LIKE '%${gender ?? ""}%' AND "
-        "departments.name LIKE '%${department ?? ""}%' AND "
-        "gpa > ${minGPA ?? "0"} AND "
-        "year_of_student LIKE '%${yearOfStudy ?? ""}%' AND "
-        "is_paid LIKE '%${paid ?? ""}%' AND "
-        "is_full_time LIKE '%${fullTime ?? ""}%' AND "
-        "is_mandatory LIKE '%${mandatory ?? ""}%' AND "
-        "free_launch LIKE '%${freeLunch ?? ""}%';";
-    List<Map> list = await dbClient.rawQuery(getInternship);
-    debugPrint("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@     $getInternship     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ");
-    print(list);
-    return null;
+        "country.name LIKE '%${internship.country ?? ""}%' AND "
+        "city.name LIKE '%${internship.city ?? ""}%' AND "
+        "departments.name LIKE '%${internship.department ?? ""}%' AND "
+        "gpa > ${internship.gpa ?? "0"} AND "
+        "year_of_student LIKE '%${internship.yearOfStudent ?? ""}%' AND "
+        "is_paid LIKE '%${internship.isPaid ?? ""}%' AND "
+        "is_full_time LIKE '%${internship.isFullTime ?? ""}%' AND "
+        "is_mandatory LIKE '%${internship.isMandatory ?? ""}%' AND "
+        "free_launch LIKE '%${internship.freeLunch ?? ""}%';";
+    List<Map> data = await dbClient.rawQuery(getInternship);
+    List<Internship> result = List<Internship>();
+    print(data);
+    for(Map records in data){
+      Internship x = Internship.fromMap(records);
+      x.studentData = await getStudentViaID(x.student);
+      result.add(x);
+    }
+
+    return result;
   }
 }

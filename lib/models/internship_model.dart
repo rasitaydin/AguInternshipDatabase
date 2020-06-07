@@ -1,3 +1,5 @@
+import 'package:internshipdatabase/models/student_model.dart';
+
 class Internship{
   String id;
   String startDate;
@@ -15,6 +17,7 @@ class Internship{
   String contactType;
   String company;
   String student;
+  Student studentData;
 
   Internship({this.id, this.startDate, this.endDate, this.contactInfo,
       this.freeLunch, this.yearOfStudent, this.gpa, this.isPaid,
@@ -38,13 +41,12 @@ class Internship{
       'departments_id' : department,
       'contact_types_id' :  contactType,
       'company_id' : company,
-      'student_id' : student
-
+      'student_id' : student,
     };
   }
 
   Internship.fromMap(Map<String, dynamic> map):
-        id = map['id'],
+        id = map['id'].toString(),
         startDate = map['start_date'],
         endDate = map['end_date'],
         contactInfo = map['contact_info'],
@@ -54,12 +56,12 @@ class Internship{
         isPaid = map['is_paid'],
         isFullTime = map['is_full_time'],
         isMandatory = map['is_mandatory'],
-        city = map['city_id'],
-        country = map['country_id'],
-        department = map['departments_id'],
-        contactType = map['contact_types_id'],
-        company = map['company_id'],
-        student = map['student_id'];
+        city = map['city_id'].toString(),
+        country = map['country_id'].toString(),
+        department = map['departments_id'].toString(),
+        contactType = map['contact_types_id'].toString(),
+        company = map['company_id'].toString(),
+        student = map['student_id'].toString();
 
   @override
   String toString() {

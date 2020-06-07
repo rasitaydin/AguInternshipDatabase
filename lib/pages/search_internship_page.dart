@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:internshipdatabase/models/internship_model.dart';
 import 'package:internshipdatabase/pages/add_internship_page.dart';
 import 'package:internshipdatabase/pages/edit_profile_page.dart';
+import 'package:internshipdatabase/pages/search_results_page.dart';
 import 'package:internshipdatabase/values/constants.dart';
 import 'package:internshipdatabase/viewmodels/main_model.dart';
 import 'package:internshipdatabase/widgets/input_widget.dart';
@@ -35,13 +37,11 @@ class _SearchInternshipPage extends State<SearchInternshipPage> {
         currentIndex: _selectedPage,
         onTap: (_selectedPage) {
           ChangePage(_selectedPage);
-          if(_selectedPage==0){
+          if (_selectedPage == 0) {
             Navigator.pushReplacementNamed(context, '/home');
-          }
-          else if(_selectedPage==1){
+          } else if (_selectedPage == 1) {
             Navigator.pushReplacementNamed(context, '/addInternship');
-          }
-          else if(_selectedPage==2){
+          } else if (_selectedPage == 2) {
             Navigator.pushReplacementNamed(context, '/editProfile');
           }
         },
@@ -73,7 +73,9 @@ class _SearchInternshipPage extends State<SearchInternshipPage> {
         backgroundColor: Colors.blue,
         title: Text(
           "Search Internship",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24,color: Colors.white),textAlign: TextAlign.center,
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 24, color: Colors.white),
+          textAlign: TextAlign.center,
         ),
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -100,26 +102,39 @@ class _SearchInternshipPage extends State<SearchInternshipPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      InputWidget.textField(height, countryCont, "Country",  Icons.place, TextInputType.text, null),
-                      InputWidget.textField(height, cityCont, "City",  Icons.place, TextInputType.text, null),
-                      InputWidget.textField(height, genderCont, "Gender",  Icons.accessibility, TextInputType.text, null),
-                      InputWidget.textField(height, depCont, "Department",  Icons.assessment, TextInputType.text, null),
-                      InputWidget.textField(height, gpaCont, "Minimum GPA",  Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.textField(height, yearCont, "Year Of Study",  Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.textField(height, lunchCont, "Free Lunch",  Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.textField(height, paidCont, "Paid",  Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.textField(height, fullTimeCont, "Full Time",  Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.textField(height, mandatoryCont, "Mandatory",  Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.button(height, 'Search', () => search(country: countryCont.text,
-                      city: cityCont.text,
-                      gender: genderCont.text,
-                      department: depCont.text,
-                      minGPA: int.parse(gpaCont.text ?? "0"),
-                      yearOfStudy: yearCont.text,
-                      freeLunch: lunchCont.text,
-                      paid: paidCont.text,
-                      fullTime: fullTimeCont.text,
-                      mandatory: mandatoryCont.text)),
+                      InputWidget.textField(height, countryCont, "Country",
+                          Icons.place, TextInputType.text, null),
+                      InputWidget.textField(height, cityCont, "City",
+                          Icons.place, TextInputType.text, null),
+                      InputWidget.textField(height, genderCont, "Gender",
+                          Icons.accessibility, TextInputType.text, null),
+                      InputWidget.textField(height, depCont, "Department",
+                          Icons.assessment, TextInputType.text, null),
+                      InputWidget.textField(height, gpaCont, "Minimum GPA",
+                          Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.textField(height, yearCont, "Year Of Study",
+                          Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.textField(height, lunchCont, "Free Lunch",
+                          Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.textField(height, paidCont, "Paid",
+                          Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.textField(height, fullTimeCont, "Full Time",
+                          Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.textField(height, mandatoryCont, "Mandatory",
+                          Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.button(
+                          height,
+                          'Search',
+                          () => search(Internship(
+                              country: countryCont.text,
+                              city: cityCont.text,
+                              department: depCont.text,
+                              gpa: gpaCont.text,
+                              yearOfStudent: yearCont.text,
+                              freeLunch: lunchCont.text,
+                              isPaid: paidCont.text,
+                              isFullTime: fullTimeCont.text,
+                              isMandatory: mandatoryCont.text))),
                       SizedBox(height: height),
                     ],
                   ),
@@ -132,49 +147,39 @@ class _SearchInternshipPage extends State<SearchInternshipPage> {
     );
   }
 
-  Widget homepage(){
+  Widget homepage() {
     return SearchInternshipPage();
   }
-  Widget profile(){
+
+  Widget profile() {
     return EditProfilePage();
   }
-  Widget add(){
+
+  Widget add() {
     return AddInternshipPage();
   }
 
-
-  void ChangePage(int index){
+  void ChangePage(int index) {
     setState(() {
-      _selectedPage =index;
+      _selectedPage = index;
       ShowPage();
     });
   }
 
-  Widget ShowPage(){
-    if(_selectedPage==0){
+  Widget ShowPage() {
+    if (_selectedPage == 0) {
       return homepage();
-    }
-    else if(_selectedPage==1){
+    } else if (_selectedPage == 1) {
       return add();
-    }
-    else if(_selectedPage==2){
+    } else if (_selectedPage == 2) {
       return profile();
     }
   }
 
-  void search(
-      {String country,
-        String city,
-        String gender,
-        String department,
-        int minGPA,
-        String yearOfStudy,
-        String freeLunch,
-        String paid,
-        String fullTime,
-        String mandatory}) async{
+  void search(Internship internship) async {
     final _mainModel = Provider.of<MainModel>(context, listen: false);
-    await _mainModel.getInternship(country: country, city: city, gender: gender, department: department, minGPA: minGPA, yearOfStudy: yearOfStudy, freeLunch: freeLunch, paid: paid, fullTime: fullTime, mandatory: mandatory);
+    await _mainModel.getInternship(internship);
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => SearhResultPage(internship)));
   }
-
 }

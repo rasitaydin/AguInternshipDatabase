@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:internshipdatabase/models/internship_model.dart';
 import 'package:internshipdatabase/pages/add_internship_page.dart';
 import 'package:internshipdatabase/pages/edit_profile_page.dart';
 import 'package:internshipdatabase/pages/search_internship_page.dart';
 import 'package:internshipdatabase/values/constants.dart';
+import 'package:internshipdatabase/widgets/input_widget.dart';
 
 class InternshipDetailsPage extends StatefulWidget {
+  final Internship internship;
+
+  InternshipDetailsPage(this.internship);
   @override
   _InternshipDetailsPage createState() => _InternshipDetailsPage();
 }
 
 class _InternshipDetailsPage extends State<InternshipDetailsPage> {
-  bool _lunch = false;
-  bool _paid = false;
-  bool _fullTime = false;
-  bool _mandatory = false;
   int _selectedPage = 0;
 
   @override
@@ -105,22 +106,16 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
                             fontSize: 20),
                       ),
                       SizedBox(height: 10.0),
-                     _buildNameTF(),
+                      InputWidget.text(widget.internship.studentData.name + " " + widget.internship.studentData.surname),
                       SizedBox(height: 10.0),
-                      _buildSurnameTF(),
+                      InputWidget.text(widget.internship.studentData.gender == "F" ? "Female" : "Male"),
                       SizedBox(height: 10.0),
-                      _buildGenderTF(),
+                      InputWidget.text(widget.internship.studentData.department),
                       SizedBox(height: 10.0),
-                      _buildDepartmentTF(),
+                      InputWidget.text(widget.internship.studentData.showMyPhone == "Y" ? widget.internship.studentData.phoneNumber : widget.internship.studentData.email),
                       SizedBox(height: 10.0),
-                      _buildAreaTF(),
-                      SizedBox(height: 10.0),
-                      _buildPhoneTF(),
-                      SizedBox(height: 10.0),
-                      _buildYearOfStudyTF(),
-                      SizedBox(height: 10.0),
-                      _buildGpaTF(),
-                      SizedBox(height: 10.0),
+                      InputWidget.text("Done in grade ${widget.internship.yearOfStudent} (GPA: ${widget.internship.gpa})"),
+                      SizedBox(height: 20.0),
                       Text(
                         "Internhsip Info",
                         style: TextStyle(
@@ -128,26 +123,25 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                       ),
+                      InputWidget.text(widget.internship.country),
                       SizedBox(height: 10.0),
-                      _buildCountryTF(),
+                      InputWidget.text(widget.internship.city),
                       SizedBox(height: 10.0),
-                      _buildCityTF(),
+                      InputWidget.text(widget.internship.company),
                       SizedBox(height: 10.0),
-                      _buildCompanyTF(),
+                      InputWidget.text("Applied by ${widget.internship.contactType}"),
                       SizedBox(height: 10.0),
-                      _buildAppliedByTF(),
+                      InputWidget.text(widget.internship.startDate),
                       SizedBox(height: 10.0),
-                      _buildStartDateTF(),
+                      InputWidget.text(widget.internship.endDate),
                       SizedBox(height: 10.0),
-                      _buildEndDateTF(),
+                      InputWidget.text(widget.internship.freeLunch == "Y" ? "Free Lunch" : "No Free Lunch"),
                       SizedBox(height: 10.0),
-                      _buildFreeLunchTF(),
+                      InputWidget.text(widget.internship.isFullTime == "Y" ? "Full Time" : "Part Time"),
                       SizedBox(height: 10.0),
-                      _buildFullTimeTF(),
+                      InputWidget.text(widget.internship.isPaid == "Y" ? "Paid" : "Not Paid"),
                       SizedBox(height: 10.0),
-                      _buildPaidTF(),
-                      SizedBox(height: 10.0),
-                      _buildMandatoryTF(),
+                      InputWidget.text(widget.internship.isMandatory == "Y" ? "Mandatory" : "Not Mandatory"),
                     ],
                   ),
                 ),
@@ -185,6 +179,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
+
   Widget _buildSurnameTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -197,7 +192,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
           child: FutureBuilder<String>(
             builder: (context, result) {
               return Text(
-                "Surname",
+                "Surname}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
@@ -211,6 +206,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
+
   Widget _buildGenderTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -237,6 +233,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
+
   Widget _buildDepartmentTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -263,6 +260,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
+
   Widget _buildPhoneTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -289,6 +287,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
+
   Widget _buildAreaTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -315,6 +314,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
+
   Widget _buildYearOfStudyTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -341,6 +341,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
+
   Widget _buildGpaTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -367,6 +368,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
+
   Widget _buildCountryTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -393,6 +395,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
+
   Widget _buildCityTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -419,6 +422,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
+
   Widget _buildCompanyTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -445,6 +449,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
+
   Widget _buildAppliedByTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -471,6 +476,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
+
   Widget _buildStartDateTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -497,6 +503,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
+
   Widget _buildEndDateTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -523,32 +530,9 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
-  Widget _buildFreeLunchTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 20.0),
-        Container(
-          alignment: Alignment.center,
-          decoration: secondBoxDecorationStyle,
-          height: 50.0,
-          child: FutureBuilder<String>(
-            builder: (context, result) {
-              return Text(
-                "Free Lunch Yes/No",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
+
+
+
   Widget _buildFullTimeTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -575,6 +559,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
+
   Widget _buildPaidTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -601,6 +586,7 @@ class _InternshipDetailsPage extends State<InternshipDetailsPage> {
       ],
     );
   }
+
   Widget _buildMandatoryTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

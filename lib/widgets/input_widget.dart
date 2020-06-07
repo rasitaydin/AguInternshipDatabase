@@ -104,4 +104,30 @@ class InputWidget {
       ],
     );
   }
+
+  static Widget text(String title) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(height: 10),
+        Container(
+          alignment: Alignment.center,
+          decoration: secondBoxDecorationStyle,
+          height: 50.0,
+          child: FutureBuilder<String>(
+            builder: (context, result) {
+              return Text(title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'OpenSans',
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
 }
