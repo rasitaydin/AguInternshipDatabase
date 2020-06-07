@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:internshipdatabase/models/internship_model.dart';
 import 'package:internshipdatabase/pages/edit_profile_page.dart';
 import 'package:internshipdatabase/pages/search_internship_page.dart';
 import 'package:internshipdatabase/values/constants.dart';
+import 'package:internshipdatabase/viewmodels/main_model.dart';
 import 'package:internshipdatabase/widgets/input_widget.dart';
+import 'package:provider/provider.dart';
 
 class AddInternshipPage extends StatefulWidget {
   @override
@@ -11,11 +14,24 @@ class AddInternshipPage extends StatefulWidget {
 }
 
 class _AddInternshipPage extends State<AddInternshipPage> {
-  bool _lunch = false;
-  bool _paid = false;
-  bool _fullTime = false;
-  bool _mandatory = false;
+
   double height = 10.0;
+
+  final countryCont = TextEditingController(text: "");
+  final cityCont = TextEditingController(text: "");
+  final companyCont = TextEditingController(text: "");
+  final departmentCont = TextEditingController(text: "");
+  final contactType = TextEditingController(text: "");
+  final genderCont = TextEditingController(text: "");
+  final contactInfoCont = TextEditingController(text: "");
+  final gpaCont = TextEditingController(text: "");
+  final yearCont = TextEditingController(text: "");
+  final lunchCont = TextEditingController(text: "");
+  final startCont = TextEditingController(text: "");
+  final endCont = TextEditingController(text: "");
+  final paidCont = TextEditingController(text: "");
+  final fullTimeCont = TextEditingController(text: "");
+  final mandatoryCont = TextEditingController(text: "");
 
   @override
   Widget build(BuildContext context) {
@@ -89,20 +105,24 @@ class _AddInternshipPage extends State<AddInternshipPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      InputWidget.textField(height, null, "Country",  Icons.place, TextInputType.text, null),
-                      InputWidget.textField(height, null, "City",  Icons.place, TextInputType.text, null),
-                      InputWidget.textField(height, null, "Company Name",  Icons.account_balance, TextInputType.text, null),
-                      InputWidget.textField(height, null, "Department of Company",  Icons.assessment, TextInputType.text, null),
-                      InputWidget.textField(height, null, "Applied By (e.g. Linkedin)",  Icons.check_box, TextInputType.text, null),
-                      InputWidget.textField(height, null, "Start Date",  Icons.date_range, TextInputType.datetime, null),
-                      InputWidget.textField(height, null, "End Date",  Icons.date_range, TextInputType.text, null),
-                      InputWidget.textField(height, null, "Year Of Study",  Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.textField(height, null, "GPA",  Icons.calendar_today, TextInputType.number, null),
-                      InputWidget.checkBox(height, 'Free Lunch', _lunch),
-                      InputWidget.checkBox(height, 'Paid', _paid),
-                      InputWidget.checkBox(height, 'Full Time', _fullTime),
-                      InputWidget.checkBox(height, 'Mandatory', _mandatory),
-                      InputWidget.button( height, 'Confirm', () => {}),
+                      InputWidget.textField(height, countryCont, "Country",  Icons.place, TextInputType.text, null),
+                      InputWidget.textField(height, cityCont, "City",  Icons.place, TextInputType.text, null),
+                      InputWidget.textField(height, companyCont, "Company Name",  Icons.account_balance, TextInputType.text, null),
+                      InputWidget.textField(height, departmentCont, "Department of Company",  Icons.assessment, TextInputType.text, null),
+                      InputWidget.textField(height, contactType, "Contact Type",  Icons.check_box, TextInputType.text, null),
+                      InputWidget.textField(height, contactInfoCont, "Contact Info",  Icons.check_box, TextInputType.text, null),
+                      InputWidget.textField(height, startCont, "Start Date",  Icons.date_range, TextInputType.datetime, null),
+                      InputWidget.textField(height, endCont, "End Date",  Icons.date_range, TextInputType.text, null),
+                      InputWidget.textField(height, yearCont, "Year Of Study",  Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.textField(height, gpaCont, "GPA",  Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.textField(height, lunchCont, "Free Lunch",  Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.textField(height, paidCont, "Paid",  Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.textField(height, fullTimeCont, "Full Time",  Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.textField(height, mandatoryCont, "Mandatory",  Icons.calendar_today, TextInputType.number, null),
+                      InputWidget.button( height, 'Confirm', () => saveInternship(Internship(country: countryCont.text,
+                      city: cityCont.text, company: companyCont.text, department: departmentCont.text, contactType: contactType.text,
+                      startDate: startCont.text, endDate: endCont.text, yearOfStudent: yearCont.text, gpa: gpaCont.text, freeLunch: lunchCont.text,
+                      isPaid: paidCont.text, isFullTime: fullTimeCont.text, isMandatory: mandatoryCont.text, contactInfo: contactInfoCont.text))),
                       SizedBox(height: height),
                     ],
                   ),
@@ -113,6 +133,12 @@ class _AddInternshipPage extends State<AddInternshipPage> {
         ),
       ),
     );
+  }
+
+  void saveInternship (Internship internship) async{
+    final _mainModel = Provider.of<MainModel>(context, listen: false);
+    internship.student = _mainModel.user.studentID;
+    await _mainModel.saveInternship(internship);
   }
 
   Widget homepage() {
