@@ -32,7 +32,7 @@ class Internship{
       'contact_info' : contactInfo,
       'free_launch' : freeLunch,
       'year_of_student' : yearOfStudent,
-      'gpa' : gpa,
+      'gpa' : int.parse(gpa),
       'is_paid' : isPaid,
       'is_full_time' : isFullTime,
       'is_mandatory' : isMandatory,

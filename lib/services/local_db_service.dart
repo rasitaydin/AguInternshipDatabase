@@ -156,10 +156,14 @@ class LocalDBService implements DBService {
     if(countryNumber == 0)
       await dbClient.rawInsert('INSERT INTO country (name) VALUES ("${internship.country}");');
 
+    var countryResult = await dbClient.query("country", where: "name = '${internship.country}'", limit: 1);
+    Country myCountry = countryResult.map((data) => Country.fromMap(data)).toList()[0];
+    add.country = myCountry.id;
+
     int cityNumber = Sqflite.firstIntValue(await dbClient
         .rawQuery('SELECT COUNT(*) FROM city WHERE name = "${internship.city}"'));
     if(cityNumber == 0)
-      await dbClient.rawInsert('INSERT INTO city (name) VALUES ("${internship.city}");');
+      await dbClient.rawInsert('INSERT INTO city (name, country_id) VALUES ("${internship.city}", "${myCountry.id}");');
 
     int companyNumber = Sqflite.firstIntValue(await dbClient
         .rawQuery('SELECT COUNT(*) FROM company WHERE name = "${internship.company}"'));
@@ -175,11 +179,6 @@ class LocalDBService implements DBService {
         .rawQuery('SELECT COUNT(*) FROM contact_types WHERE name = "${internship.contactType}"'));
     if(contactTypeNumber == 0)
       await dbClient.rawInsert('INSERT INTO contact_types (name) VALUES ("${internship.contactType}");');
-
-
-    var countryResult = await dbClient.query("country", where: "name = '${internship.country}'", limit: 1);
-    Country myCountry = countryResult.map((data) => Country.fromMap(data)).toList()[0];
-    add.country = myCountry.id;
 
     var cityResult = await dbClient.query("city", where: "name = '${internship.city}'", limit: 1);
     City myCity = cityResult.map((data) => City.fromMap(data)).toList()[0];
@@ -257,14 +256,13 @@ class LocalDBService implements DBService {
         "year_of_student, gpa, is_paid, is_full_time, is_mandatory, city.name AS city_id, country.name AS country_id, "
         "departments.name AS departments_id, contact_types.name AS contact_types_id, internship.student_id AS student_id "
         "FROM internship, city, country, departments, contact_types, company, student "
-        "WHERE internship.city_id = city.id AND student.student_id = internship.student_id AND country.id = city.country_id "
+        "WHERE internship.city_id = city.id AND student.student_id = internship.student_id AND country.id = internship.country_id "
         "AND internship.departments_id = departments.id AND internship.contact_types_id = contact_types.id "
         "AND internship.company_id = company.id AND "
         "country.name LIKE '%${internship.country ?? ""}%' AND "
         "city.name LIKE '%${internship.city ?? ""}%' AND "
         "departments.name LIKE '%${internship.department ?? ""}%' AND "
         "company.name LIKE '%${internship.company}%' AND  "
-        "gpa <= ${internship.gpa ?? "0"} AND "
         "year_of_student LIKE '%${internship.yearOfStudent ?? ""}%' AND "
         "is_paid LIKE '%${internship.isPaid ?? ""}%' AND "
         "is_full_time LIKE '%${internship.isFullTime ?? ""}%' AND "
